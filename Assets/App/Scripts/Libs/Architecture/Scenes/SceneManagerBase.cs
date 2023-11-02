@@ -13,14 +13,14 @@ namespace App.Scripts.Libs.Architecture.Scenes
         public Scene Scene { get; private set; }
         public bool IsLoading { get; private set; }
 
-        protected Dictionary<string, SceneConfig> _sceneConfigMap;
+        protected readonly Dictionary<string, SceneConfig> SceneConfigMap;
         
         public SceneManagerBase()
         {
-            _sceneConfigMap = new Dictionary<string, SceneConfig>();
+            SceneConfigMap = new Dictionary<string, SceneConfig>();
         }
 
-        protected abstract void InitScenesMap();
+        public abstract void InitScenesMap();
 
         public UniTask LoadCurrentSceneAsync()
         {
@@ -28,7 +28,7 @@ namespace App.Scripts.Libs.Architecture.Scenes
                 throw new Exception("Scene is loading now");
 
             var sceneName = SceneManager.GetActiveScene().name;
-            return LoadCurrentSceneAsync(_sceneConfigMap[sceneName]);
+            return LoadCurrentSceneAsync(SceneConfigMap[sceneName]);
         }
 
         private async UniTask LoadCurrentSceneAsync(SceneConfig sceneConfig)
@@ -46,7 +46,7 @@ namespace App.Scripts.Libs.Architecture.Scenes
             if (IsLoading)
                 throw new Exception("Scene is loading now");
 
-            return LoadNewSceneAsync(_sceneConfigMap[sceneName]);
+            return LoadNewSceneAsync(SceneConfigMap[sceneName]);
         }
 
         private async UniTask LoadNewSceneAsync(SceneConfig sceneConfig)

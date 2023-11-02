@@ -2,10 +2,14 @@
 
 namespace App.Scripts.Mixed.ObjectPoolArc
 {
-    public class ObjectPoolInteractor : Interactor
+    public sealed class ObjectPoolInteractor : Interactor
     {
         private ObjectPoolRepository _repository;
-        
-        
+
+        public override void OnCreate()
+        {
+            base.OnCreate();
+            _repository = Game.GetRepository<ObjectPoolRepository>();
+        }
     }
 }

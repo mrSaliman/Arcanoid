@@ -5,7 +5,7 @@ using App.Scripts.Libs.ObjectPool;
 
 namespace App.Scripts.Mixed.ObjectPoolArc
 {
-    public class ObjectPoolRepository : Repository
+    public sealed class ObjectPoolRepository : Repository
     {
         private Dictionary<Type, object> _objectPools;
         
@@ -18,19 +18,19 @@ namespace App.Scripts.Mixed.ObjectPoolArc
         {
         }
         
-        public T GetObjectFromPool<T>() where T : new()
+        public T GetObjectFromPool<T>() where T : IPoolable, new()
         {
             var objPool = GetObjectPool<T>();
             return objPool.Get();
         }
         
-        public void ReturnObjectToPool<T>(T obj) where T : new ()
+        public void ReturnObjectToPool<T>(T obj) where T : IPoolable, new ()
         {
             var objPool = GetObjectPool<T>();
             objPool.Return(obj);
         }
 
-        private ObjectPool<T> GetObjectPool<T>() where T : new()
+        private ObjectPool<T> GetObjectPool<T>() where T : IPoolable, new()
         {
             var type = typeof(T);
 
