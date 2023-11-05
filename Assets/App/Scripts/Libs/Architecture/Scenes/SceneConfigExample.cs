@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using App.Scripts.Mixed.ObjectPoolArc;
+using App.Scripts.AllScenes.ObjectPoolArc;
 
 namespace App.Scripts.Libs.Architecture.Scenes
 {

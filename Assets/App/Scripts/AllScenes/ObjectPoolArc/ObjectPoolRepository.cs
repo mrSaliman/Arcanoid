@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using App.Scripts.Libs.Architecture;
 using App.Scripts.Libs.ObjectPool;
 
-namespace App.Scripts.Mixed.ObjectPoolArc
+namespace App.Scripts.AllScenes.ObjectPoolArc
 {
     public sealed class ObjectPoolRepository : Repository
     {

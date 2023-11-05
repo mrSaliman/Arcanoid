@@ -1,6 +1,6 @@
 ﻿using App.Scripts.Libs.Architecture;
 
-namespace App.Scripts.Mixed.ObjectPoolArc
+namespace App.Scripts.AllScenes.ObjectPoolArc
 {
     public sealed class ObjectPoolInteractor : Interactor
     {
