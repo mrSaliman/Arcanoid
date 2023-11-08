@@ -1,5 +1,7 @@
-﻿using App.Scripts.Libs.NodeArchitecture;
+﻿using App.Scripts.GameScene.Game;
+using App.Scripts.Libs.NodeArchitecture;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace App.Scripts.AllScenes.ProjectContext
 {
@@ -37,10 +39,12 @@ namespace App.Scripts.AllScenes.ProjectContext
         }
 
         private readonly SceneSwitcher _sceneSwitcher = new();
+        [SerializeField] private LocalizationManager localizationManager = new();
 
         private void RegisterMainInstances()
         {
             RegisterInstance(_sceneSwitcher);
+            RegisterInstance(localizationManager);
         }
     }
 }

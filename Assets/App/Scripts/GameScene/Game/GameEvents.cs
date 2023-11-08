@@ -25,4 +25,8 @@ namespace App.Scripts.GameScene.Game
     public sealed class GameFinish : ContextEvent
     {
     }
+    
+    public sealed class LanguageChanged : ContextEvent
+    {
+    }
 }

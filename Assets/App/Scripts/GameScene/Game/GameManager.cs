@@ -1,4 +1,5 @@
 ﻿using App.Scripts.AllScenes.ProjectContext;
+using App.Scripts.Libs.NodeArchitecture;
 using UnityEngine;
 
 namespace App.Scripts.GameScene.Game
@@ -10,6 +11,7 @@ namespace App.Scripts.GameScene.Game
 
         [SerializeField]
         private GameContext context;
+        private ContextNode _root;
         
         [SerializeField]
         private bool autoRun = true;
@@ -17,65 +19,72 @@ namespace App.Scripts.GameScene.Game
         private void Awake()
         {
             context.RegisterInstance(this);
-            var prContext = ProjectContext.Instance;
-            prContext.Construct();
-            prContext.AddChild(context);
+            _root = ProjectContext.Instance;
+            _root.Construct();
+            _root.AddChild(context);
             
             GameState = GameState.Off;
 
             if (autoRun)
             {
                 ConstructGame();
+                InitGame();
                 StartGame();
             }
         }
 
         private void Update()
         {
-            context.OnUpdate();
+            _root.OnUpdate();
         }
 
         private void FixedUpdate()
         {
-            context.OnFixedUpdate();
+            _root.OnFixedUpdate();
         }
 
         private void LateUpdate()
         {
-            context.OnLateUpdate();
+            _root.OnLateUpdate();
         }
         
         [ContextMenu("Inject")]
         public void ConstructGame()
         {
-            context.SendEvent<GameInject>();
+            _root.SendEvent<GameInject>();
+        }
+
+        [ContextMenu("Init")]
+        public void InitGame()
+        {
+            _root.SendEvent<GameInit>();
         }
 
         [ContextMenu("Start")]
         public void StartGame()
         {
-            context.SendEvent<GameStart>();
+            _root.SendEvent<GameStart>();
             GameState = GameState.Playing;
         }
 
         [ContextMenu("Pause")]
         public void PauseGame()
         {
-            context.SendEvent<GamePause>();
+            _root.SendEvent<GamePause>();
             GameState = GameState.Paused;
         }
 
         [ContextMenu("Resume")]
         public void ResumeGame()
         {
-            context.SendEvent<GameResume>();
+            _root.SendEvent<GameResume>();
             GameState = GameState.Playing;
         }
 
         [ContextMenu("Finish")]
         public void FinishGame()
         {
-            context.SendEvent<GameFinish>();
+            _root.SendEvent<GameFinish>();
             GameState = GameState.Finished;
         }
     }
