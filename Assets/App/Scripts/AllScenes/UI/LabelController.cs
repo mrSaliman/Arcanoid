@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using App.Scripts.AllScenes.ProjectContext;
 using App.Scripts.GameScene.Game;
 using App.Scripts.Libs.DataManager;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace App.Scripts.AllScenes.UI
 {
-    [Serializable]
-    public class LabelController
+    public class LabelController : SerializedMonoBehaviour
     {
-        private Dictionary<Type, Action<object, string>> _dataHandlers = new();
-        [SerializeField] private Dictionary<string, LocalizedLabel> labels;
+        private Dictionary<Type, Action<object, string>> _dataHandlers = new(); 
+        [ShowInInspector] [OdinSerialize] private Dictionary<string, LocalizedLabel> labels;
 
         private LocalizationManager _localizationManager;
         private DataManager _dataManager;

@@ -1,12 +1,11 @@
 ﻿using App.Scripts.Libs.NodeArchitecture;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace App.Scripts.AllScenes.UI
 {
     public class UIContext : ContextNode
     {
-        [FormerlySerializedAs("labelsLocalizationManager")] [SerializeField] private LabelController labelController = new();
+        [SerializeField] private LabelController labelController;
 
         protected override void OnConstruct()
         {

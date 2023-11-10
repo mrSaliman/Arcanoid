@@ -12,11 +12,13 @@ namespace App.Scripts.AllScenes.UI
         public void SetText(string text)
         {
             _text = text;
+            UpdateLabel();
         }
 
         public void SetData(string data)
         {
             _data = data;
+            UpdateLabel();
         }
 
         private void UpdateLabel()
