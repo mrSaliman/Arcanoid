@@ -6,13 +6,22 @@ namespace App.Scripts.AllScenes.UI
     public class LocalizedLabel : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI label;
-        [SerializeField] private string key;
 
-        public string Key => key;
+        private string _text, _data;
 
         public void SetText(string text)
         {
-            label.text = text;
+            _text = text;
+        }
+
+        public void SetData(string data)
+        {
+            _data = data;
+        }
+
+        private void UpdateLabel()
+        {
+            label.text = _text + _data;
         }
     }
 }
