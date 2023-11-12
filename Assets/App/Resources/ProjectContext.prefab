@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   children: []
   localizationManager:
-    currentLanguage: 10
+    localizationSettings: {fileID: 11400000, guid: 6da496d37c4c3524bbda4e75390c3690, type: 2}
