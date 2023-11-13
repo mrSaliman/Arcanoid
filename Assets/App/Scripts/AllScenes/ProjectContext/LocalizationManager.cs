@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using App.Scripts.Configs;
 using App.Scripts.GameScene.Game;
 using App.Scripts.Libs.JsonResourceLoader;
 using UnityEngine;

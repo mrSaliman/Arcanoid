@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Scripts.AllScenes.ProjectContext
+namespace App.Scripts.Configs
 {
     [CreateAssetMenu(menuName = "settings/LocalizationSettings")]
     public class LocalizationSettings : ScriptableObject

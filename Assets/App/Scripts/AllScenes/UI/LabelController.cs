@@ -11,8 +11,8 @@ namespace App.Scripts.AllScenes.UI
 {
     public class LabelController : SerializedMonoBehaviour
     {
-        private Dictionary<Type, Action<object, string>> _dataHandlers = new(); 
-        [ShowInInspector] [OdinSerialize] private Dictionary<string, LocalizedLabel> labels;
+        private readonly Dictionary<Type, Action<object, string>> _dataHandlers = new(); 
+        [ShowInInspector] [OdinSerialize] private Dictionary<string, LocalizedLabel> _labels;
 
         private LocalizationManager _localizationManager;
         private DataManager _dataManager;
@@ -42,13 +42,13 @@ namespace App.Scripts.AllScenes.UI
 
         private void HandleStringData(object data, string textID)
         {
-            if (!labels.ContainsKey(textID)) return;
-            labels[textID].SetData((string)data);
+            if (!_labels.ContainsKey(textID)) return;
+            _labels[textID].SetData((string)data);
         }
 
         private void HandleLanguageChanged()
         {
-            foreach (var label in labels)
+            foreach (var label in _labels)
             {
                 label.Value.SetText(_localizationManager.GetLocalizedString(label.Key));
             }

@@ -275,6 +275,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &742005422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 742005423}
+  - component: {fileID: 742005425}
+  - component: {fileID: 742005424}
+  m_Layer: 0
+  m_Name: GameField
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &742005423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742005422}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1612925184}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &742005424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742005422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53ce4e60e4b2423f81bddfed4a266ca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilesetSettings: {fileID: 11400000, guid: 2a80ee712c4ec564c86d9db307e45e4b, type: 2}
+  levelLoaderSettings: {fileID: 11400000, guid: 46bbd3948ed65bf48ba823a5003f7feb, type: 2}
+--- !u!114 &742005425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742005422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c61d1c5aac44bc39b7f78c2a5fd786d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  children: []
+  gameFieldManager: {fileID: 742005424}
 --- !u!1 &1053773772
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   children:
   - {fileID: 1617583034}
+  - {fileID: 742005425}
 --- !u!114 &1612925183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +497,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1617583033}
+  - {fileID: 742005423}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -450,7 +513,7 @@ GameObject:
   - component: {fileID: 1617583034}
   - component: {fileID: 1617583035}
   m_Layer: 0
-  m_Name: UIContext
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -507,7 +570,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: labels
+    - Name: _labels
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[App.Scripts.AllScenes.UI.LocalizedLabel,
         Assembly-CSharp]], mscorlib
