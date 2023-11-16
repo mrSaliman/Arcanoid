@@ -71,9 +71,9 @@ namespace App.Scripts.GameScene.GameField
         }
 
         [Button]
-        private void DealDamage(int damage, Vector2Int tile)
+        private void DealDamage(int damage, BlockView tile)
         {
-            _currentLevel.GetBlock(tile.x, tile.y).TakeDamage(damage);
+            _currentLevel.GetBlock(tile.gridPosition.x, tile.gridPosition.y).TakeDamage(damage);
         }
     }
 }
