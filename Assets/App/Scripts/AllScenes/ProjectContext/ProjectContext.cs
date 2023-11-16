@@ -41,8 +41,6 @@ namespace App.Scripts.AllScenes.ProjectContext
         private readonly SceneSwitcher _sceneSwitcher = new();
         [SerializeField] private LocalizationManager localizationManager = new();
 
-        public string currentLevel;
-
         private void RegisterMainInstances()
         {
             RegisterInstance(_sceneSwitcher);

@@ -65,6 +65,7 @@ namespace App.Scripts.GameScene.GameField.Model
                 Debug.LogError("Index is out of range");
                 return;
             }
+            
             Blocks[x + y * _width] = null;
         }
 

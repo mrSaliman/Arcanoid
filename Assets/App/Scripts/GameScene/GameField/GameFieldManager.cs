@@ -3,12 +3,17 @@ using App.Scripts.Configs;
 using App.Scripts.GameScene.Game;
 using App.Scripts.GameScene.GameField.Model;
 using App.Scripts.GameScene.GameField.View;
+using App.Scripts.Libs.ObjectPool;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace App.Scripts.GameScene.GameField
 {
     public class GameFieldManager : MonoBehaviour
     {
+        public ObjectPool<Block> BlockPool;
+        public ObjectPool<BlockView> BlockViewPool;
+
         [SerializeField] public TilesetSettings tilesetSettings;
         [SerializeField] public LevelLoaderSettings levelLoaderSettings;
         [SerializeField] public GameFieldSettings gameFieldSettings;
@@ -16,17 +21,17 @@ namespace App.Scripts.GameScene.GameField
         [SerializeField] private EdgeCollider2D edgeCollider;
 
         private LevelLoader _levelLoader;
-        private ProjectContext _projectContext;
         private CameraInfoProvider _cameraInfoProvider;
         private LevelView _levelView;
 
         private Level _currentLevel;
 
+        public Level CurrentLevel => _currentLevel;
+
         [GameInject]
-        public void Construct(LevelLoader levelLoader, ProjectContext projectContext, CameraInfoProvider cameraInfoProvider, LevelView levelView)
+        public void Construct(LevelLoader levelLoader, CameraInfoProvider cameraInfoProvider, LevelView levelView)
         {
             _levelLoader = levelLoader;
-            _projectContext = projectContext;
             _cameraInfoProvider = cameraInfoProvider;
             _levelView = levelView;
         }
@@ -55,7 +60,20 @@ namespace App.Scripts.GameScene.GameField
 
         private void LoadCurrentLevel()
         {
-            _currentLevel = _levelLoader.LoadLevel(_projectContext.currentLevel);
+            _currentLevel = _levelLoader.LoadLevel(gameFieldSettings.DebugLevel);
+        }
+
+        public void RemoveBlock(BlockView blockView)
+        {
+            _levelView.RemoveBlock(blockView);
+            BlockPool.Return(_currentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y));
+            _currentLevel.RemoveBlock(blockView.gridPosition.x, blockView.gridPosition.y);
+        }
+
+        [Button]
+        private void DealDamage(int damage, Vector2Int tile)
+        {
+            _currentLevel.GetBlock(tile.x, tile.y).TakeDamage(damage);
         }
     }
 }

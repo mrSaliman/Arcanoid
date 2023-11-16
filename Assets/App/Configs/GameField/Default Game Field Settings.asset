@@ -12,8 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33df91725efc40d69af07cd6a8a852fa, type: 3}
   m_Name: Default Game Field Settings
   m_EditorClassIdentifier: 
-  topIndentationPercent: 0.05124451
-  horizontalIndentation: 0.14
-  betweenBlockIndentation: 0.02
-  defaultBlockSize: {x: 1.04, y: 0.5}
-  blockViewPrefab: {fileID: 7087084012942327107, guid: 3c137e2fb42920d448ccc6be6d91bb95, type: 3}
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 7087084012942327107, guid: 3c137e2fb42920d448ccc6be6d91bb95, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: topIndentationPercent
+      Entry: 4
+      Data: 0.05124451
+    - Name: horizontalIndentation
+      Entry: 4
+      Data: 0.14
+    - Name: betweenBlockIndentation
+      Entry: 4
+      Data: 0.02
+    - Name: defaultBlockSize
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1.04
+    - Name: 
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: blockViewPrefab
+      Entry: 10
+      Data: 0
+    - Name: debugLevel
+      Entry: 1
+      Data: GameField/Levels/1

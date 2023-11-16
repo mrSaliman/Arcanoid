@@ -11,12 +11,14 @@ namespace App.Scripts.GameScene.GameField
         [SerializeField] private GameFieldManager gameFieldManager;
         private LevelLoader _levelLoader = new();
         private LevelView _levelView = new();
+        private BlockBehaviourHandler _blockBehaviourHandler = new();
         
         protected override void OnConstruct()
         {
             RegisterInstance(gameFieldManager);
             RegisterInstance(_levelLoader);
             RegisterInstance(_levelView);
+            RegisterInstance(_blockBehaviourHandler);
         }
     }
 }

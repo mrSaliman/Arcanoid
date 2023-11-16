@@ -1,4 +1,5 @@
-﻿using App.Scripts.Libs.ObjectPool;
+﻿using System;
+using App.Scripts.Libs.ObjectPool;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -6,7 +7,8 @@ namespace App.Scripts.GameScene.GameField.View
 {
     public class BlockView : MonoBehaviour, IPoolable
     {
-        public Vector2 gridPosition;
+        public Vector2Int gridPosition;
+        public Action OnHealthDepletedHandler;
 
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private BoxCollider2D boxCollider;
@@ -17,11 +19,6 @@ namespace App.Scripts.GameScene.GameField.View
             boxCollider.size = sprite.bounds.size;
         }
 
-        public void SelfDestroy()
-        {
-            
-        }
-
         public void Activate()
         {
             gameObject.SetActive(true);
@@ -29,6 +26,7 @@ namespace App.Scripts.GameScene.GameField.View
 
         public void Deactivate()
         {
+            OnHealthDepletedHandler = null;
             gameObject.SetActive(false);
         }
     }

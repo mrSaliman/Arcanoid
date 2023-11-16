@@ -14,14 +14,17 @@ namespace App.Scripts.GameScene.GameField.Model
 
         public Dictionary<int, BlockSpriteAssociation> Tileset { get; private set; }
 
+        private GameFieldManager _gameFieldManager;
+
         private LevelLoaderSettings _settings;
 
         [GameInject]
         public void Construct(GameFieldManager manager)
         {
             _settings = manager.levelLoaderSettings;
+            manager.BlockPool = new ObjectPool<Block>(() => new Block(), _settings.BlockPoolSize);
+            _blockPool = manager.BlockPool;
             LoadTileset(manager.tilesetSettings);
-            _blockPool = new ObjectPool<Block>(() => new Block(), _settings.BlockPoolSize);
         }
 
         private void LoadTileset(TilesetSettings tilesetSettings)
@@ -34,7 +37,7 @@ namespace App.Scripts.GameScene.GameField.Model
             }
         }
         
-        public Level LoadLevel(string name)
+        public Level LoadLevel(string path)
         {
             if (Tileset.Count == 0)
             {
@@ -42,7 +45,7 @@ namespace App.Scripts.GameScene.GameField.Model
                 return null;
             }
             
-            var map = JsonResourceLoader.LoadFromResources<MapData>(_settings.LevelsFolder + name);
+            var map = JsonResourceLoader.LoadFromResources<MapData>(path);
             if (map.layers.Length < 1)
             {
                 Debug.LogError("Map has no layers!");
