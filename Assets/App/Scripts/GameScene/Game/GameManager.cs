@@ -1,6 +1,7 @@
 ﻿using App.Scripts.AllScenes.ProjectContext;
 using App.Scripts.Libs.JsonResourceLoader;
 using App.Scripts.Libs.NodeArchitecture;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace App.Scripts.GameScene.Game
@@ -16,7 +17,9 @@ namespace App.Scripts.GameScene.Game
         
         [SerializeField]
         private bool autoRun = true;
-        
+
+        public Rigidbody2D rb;
+         
         private void Awake()
         {
             context.RegisterInstance(this);
@@ -31,6 +34,7 @@ namespace App.Scripts.GameScene.Game
                 ConstructGame();
                 InitGame();
                 StartGame();
+                rb.velocity = new Vector2(5, -5);
             }
         }
 

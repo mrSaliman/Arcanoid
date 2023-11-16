@@ -6,7 +6,11 @@ namespace App.Scripts.Configs
     public class LevelLoaderSettings : ScriptableObject
     {
         [SerializeField] private int blockPoolSize;
-
+        [SerializeField] private string tilesetPath;
+        [SerializeField] private string levelsFolder;
+        
         public int BlockPoolSize => blockPoolSize;
+        public string TilesetPath => tilesetPath;
+        public string LevelsFolder => levelsFolder;
     }
 }

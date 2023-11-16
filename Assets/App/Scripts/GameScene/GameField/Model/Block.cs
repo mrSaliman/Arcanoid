@@ -1,30 +1,23 @@
 ﻿using System;
 using App.Scripts.Libs.ObjectPool;
 
-namespace App.Scripts.GameScene.Level
+namespace App.Scripts.GameScene.GameField.Model
 {
     [Serializable]
     public class Block : IPoolable
     {
         public int health;
-        public BlockType blockType; 
+        public BlockType blockType;
 
-        public event Action<Block> OnHealthDepleted;
-
-        public Block(int initialHealth, int x, int y, BlockType type)
-        {
-            health = initialHealth;
-            blockType = type;
-        }
-
-        public Block() { }
+        public event Action OnHealthDepleted;
 
         public void TakeDamage(int damage)
         {
+            if (health <= 0) return;
             health -= damage;
             if (health <= 0)
             {
-                OnHealthDepleted?.Invoke(this);
+                OnHealthDepleted?.Invoke();
             }
         }
 

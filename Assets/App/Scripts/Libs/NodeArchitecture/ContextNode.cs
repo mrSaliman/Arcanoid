@@ -143,14 +143,14 @@ namespace App.Scripts.Libs.NodeArchitecture
 
         public object ResolveInstance(Type type)
         {
-            if (type == typeof(ContextNode))
-            {
-                return this;
-            }
-
             var node = this;
             while (node != null)
             {
+                if (type == node.GetType())
+                {
+                    return node;
+                }
+                
                 if (node.FindInstance(type, out var service))
                 {
                     return service;

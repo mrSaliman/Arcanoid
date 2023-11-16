@@ -1,44 +1,48 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.Configs;
 using App.Scripts.GameScene.Game;
-using App.Scripts.GameScene.Level.Tiled;
+using App.Scripts.GameScene.GameField.Model.Tiled;
 using App.Scripts.Libs.JsonResourceLoader;
 using App.Scripts.Libs.ObjectPool;
 using UnityEngine;
 
-namespace App.Scripts.GameScene.Level
+namespace App.Scripts.GameScene.GameField.Model
 {
     public class LevelLoader
     {
-        private Dictionary<int, Block> _tileset;
-        private Dictionary<string, Block> _boundTileset;
         private ObjectPool<Block> _blockPool;
+
+        public Dictionary<int, BlockSpriteAssociation> Tileset { get; private set; }
+
+        private LevelLoaderSettings _settings;
 
         [GameInject]
         public void Construct(GameFieldManager manager)
         {
-            _boundTileset = manager.tilesetSettings.Tiles;
-            _blockPool = new ObjectPool<Block>(() => new Block(), manager.levelLoaderSettings.BlockPoolSize);
+            _settings = manager.levelLoaderSettings;
+            LoadTileset(manager.tilesetSettings);
+            _blockPool = new ObjectPool<Block>(() => new Block(), _settings.BlockPoolSize);
         }
-        
-        public void LoadTileset(string path)
+
+        private void LoadTileset(TilesetSettings tilesetSettings)
         {
-            _tileset = new Dictionary<int, Block>();
-            var tilesetData = JsonResourceLoader.LoadFromResources<TilesetData>(path);
+            Tileset = new Dictionary<int, BlockSpriteAssociation>();
+            var tilesetData = JsonResourceLoader.LoadFromResources<TilesetData>(_settings.TilesetPath);
             foreach (var tile in tilesetData.tiles)
             {
-                if (_boundTileset.TryGetValue(tile.type, out var value)) _tileset[tile.id] = value;
+                if (tilesetSettings.Tiles.TryGetValue(tile.type, out var value)) Tileset[tile.id] = value;
             }
         }
         
-        public Level LoadLevel(string path)
+        public Level LoadLevel(string name)
         {
-            if (_tileset.Count == 0)
+            if (Tileset.Count == 0)
             {
                 Debug.LogError("Tileset is not loaded!");
                 return null;
             }
             
-            var map = JsonResourceLoader.LoadFromResources<MapData>(path);
+            var map = JsonResourceLoader.LoadFromResources<MapData>(_settings.LevelsFolder + name);
             if (map.layers.Length < 1)
             {
                 Debug.LogError("Map has no layers!");
@@ -51,10 +55,11 @@ namespace App.Scripts.GameScene.Level
             {
                 var tile = layer.data[index] - 1;
                 Block boundTile = null;
-                if (_tileset.TryGetValue(tile, out var value))
+                if (Tileset.TryGetValue(tile, out var value))
                 {
                     boundTile = _blockPool.Get();
-                    boundTile.Copy(value);
+                    boundTile.Copy(value.block);
+                    level.Tags[index] = tile;
                 }
                 level.SetBlock(boundTile, index);
             }

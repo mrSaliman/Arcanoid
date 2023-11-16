@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.GameScene.Level
+﻿namespace App.Scripts.GameScene.GameField.Model
 {
     public enum BlockType
     {

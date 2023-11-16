@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App.Scripts.GameScene.Level.Tiled
+namespace App.Scripts.GameScene.GameField.Model.Tiled
 {
     [Serializable]
     public class MapData

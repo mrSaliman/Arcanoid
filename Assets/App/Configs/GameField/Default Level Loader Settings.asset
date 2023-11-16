@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Default Level Loader Settings
   m_EditorClassIdentifier: 
   blockPoolSize: 20
+  tilesetPath: GameField/Tilesets/ArcanoidTiles
+  levelsFolder: GameField/Levels/

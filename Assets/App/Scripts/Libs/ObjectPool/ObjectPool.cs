@@ -13,10 +13,7 @@ namespace App.Scripts.Libs.ObjectPool
         {
             _objectFactory = objectFactory;
 
-            for (var i = 0; i < initialSize; i++)
-            {
-                CreateObject();
-            }
+            Resize(initialSize);
         }
 
         private T CreateObject()
@@ -45,7 +42,7 @@ namespace App.Scripts.Libs.ObjectPool
             }
         }
 
-        public void Resize(int newSize)
+        private void Resize(int newSize)
         {
             if (newSize < 0)
             {
@@ -57,7 +54,7 @@ namespace App.Scripts.Libs.ObjectPool
             if (diff <= 0) return;
             for (var i = 0; i < diff; i++)
             {
-                CreateObject();
+                _objects.Push(CreateObject()); 
             }
         }
     }

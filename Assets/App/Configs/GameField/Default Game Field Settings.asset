@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33df91725efc40d69af07cd6a8a852fa, type: 3}
+  m_Name: Default Game Field Settings
+  m_EditorClassIdentifier: 
+  topIndentationPercent: 0.05124451
+  horizontalIndentation: 0.14
+  betweenBlockIndentation: 0.02
+  defaultBlockSize: {x: 1.04, y: 0.5}
+  blockViewPrefab: {fileID: 7087084012942327107, guid: 3c137e2fb42920d448ccc6be6d91bb95, type: 3}
