@@ -20,6 +20,9 @@ namespace App.Scripts.GameScene.GameField
 
         [SerializeField] private EdgeCollider2D edgeCollider;
 
+        public Transform blockContainer;
+        public Transform ballContainer;
+
         private LevelLoader _levelLoader;
         private CameraInfoProvider _cameraInfoProvider;
         private LevelView _levelView;

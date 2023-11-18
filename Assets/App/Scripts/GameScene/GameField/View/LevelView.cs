@@ -34,7 +34,8 @@ namespace App.Scripts.GameScene.GameField.View
             _levelLoaderSettings = manager.levelLoaderSettings;
             _cameraRect = cameraInfoProvider.CameraRect;
             _levelLoader = levelLoader;
-            manager.BlockViewPool = new ObjectPool<BlockView>(() => Object.Instantiate(_gameFieldSettings.BlockViewPrefab),
+            manager.BlockViewPool = new ObjectPool<BlockView>(
+                () => Object.Instantiate(_gameFieldSettings.BlockViewPrefab, _gameFieldManager.blockContainer),
                 _levelLoaderSettings.BlockPoolSize);
             _blockViewPool = manager.BlockViewPool;
         }

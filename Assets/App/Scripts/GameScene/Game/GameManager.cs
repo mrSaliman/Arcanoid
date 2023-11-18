@@ -1,12 +1,16 @@
 ﻿using App.Scripts.AllScenes.ProjectContext;
 using App.Scripts.Libs.JsonResourceLoader;
 using App.Scripts.Libs.NodeArchitecture;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace App.Scripts.GameScene.Game
 {
     [RequireComponent(typeof(GameContext))]
+    [InfoBox("$GameState")]
+    [InfoBox("@rb.velocity.magnitude")]
     public class GameManager : MonoBehaviour
     {
         public GameState GameState { get; private set; }

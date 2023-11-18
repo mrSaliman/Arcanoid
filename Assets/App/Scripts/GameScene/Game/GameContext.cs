@@ -8,10 +8,12 @@ namespace App.Scripts.GameScene.Game
     public sealed class GameContext : ContextNode
     {
         private DataManager _dataManager = new();
+        private MouseInput _mouseInput = new();
         [SerializeField] private CameraInfoProvider cameraInfoProvider;
         
         protected override void OnConstruct()
         {
+            RegisterInstance(_mouseInput);
             RegisterInstance(_dataManager);
             RegisterInstance(cameraInfoProvider);
         }

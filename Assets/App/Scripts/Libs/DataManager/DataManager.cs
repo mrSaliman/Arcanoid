@@ -14,7 +14,7 @@ namespace App.Scripts.Libs.DataManager
         }
     }
 
-    public class DataManager
+    public sealed class DataManager
     {
         public event EventHandler<DataChangedEventArgs> DataChanged;
 
@@ -23,7 +23,7 @@ namespace App.Scripts.Libs.DataManager
             OnDataChanged(textID, newData);
         }
 
-        protected virtual void OnDataChanged<T>(string textID, T newData)
+        private void OnDataChanged<T>(string textID, T newData)
         {
             DataChanged?.Invoke(this, new DataChangedEventArgs(textID, newData));
         }

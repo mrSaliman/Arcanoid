@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f17c416fb94cb9a8a84d71e517b571, type: 3}
   m_Name: Default Level Loader Settings
   m_EditorClassIdentifier: 
-  blockPoolSize: 20
-  tilesetPath: GameField/Tilesets/ArcanoidTiles
-  levelsFolder: GameField/Levels/
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: blockPoolSize
+      Entry: 3
+      Data: 0
+    - Name: tilesetPath
+      Entry: 1
+      Data: GameField/Tilesets/ArcanoidTiles
