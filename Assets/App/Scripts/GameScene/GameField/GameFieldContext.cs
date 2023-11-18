@@ -12,6 +12,8 @@ namespace App.Scripts.GameScene.GameField
         private LevelLoader _levelLoader = new();
         private LevelView _levelView = new();
         private BlockBehaviourHandler _blockBehaviourHandler = new();
+        private PlatformMover _platformMover = new();
+        [SerializeField] private PlatformView platformView;
         
         protected override void OnConstruct()
         {
@@ -19,6 +21,8 @@ namespace App.Scripts.GameScene.GameField
             RegisterInstance(_levelLoader);
             RegisterInstance(_levelView);
             RegisterInstance(_blockBehaviourHandler);
+            RegisterInstance(platformView);
+            RegisterInstance(_platformMover);
         }
     }
 }

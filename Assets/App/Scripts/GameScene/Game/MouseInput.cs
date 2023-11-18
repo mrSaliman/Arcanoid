@@ -30,8 +30,8 @@ namespace App.Scripts.GameScene.Game
         
         public void OnUpdate()
         {
-            Position = Input.mousePosition;
-            if (_mouseInputZone.Contains(_cameraInfoProvider.mainCamera.ScreenToWorldPoint(Position)))
+            Position = _cameraInfoProvider.mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            if (_mouseInputZone.Contains(Position))
             {
                 if (Input.GetMouseButton(0))
                 {

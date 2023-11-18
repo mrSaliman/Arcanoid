@@ -1,0 +1,37 @@
+{ "compressionlevel":-1,
+ "height":6,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[9, 9, 9, 9, 9, 9,
+            3, 3, 3, 3, 3, 9,
+            3, 3, 9, 9, 9, 9,
+            3, 9, 9, 9, 6, 2,
+            3, 9, 6, 6, 6, 1,
+            2, 3, 6, 2, 6, 10],
+         "height":6,
+         "id":1,
+         "name":"\u0421\u043b\u043e\u0439 \u0442\u0430\u0439\u043b\u043e\u0432 1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":6,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":2,
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.10.2",
+ "tileheight":50,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "source":"..\/Tilesets\/ArcanoidTiles.json"
+        }],
+ "tilewidth":104,
+ "type":"map",
+ "version":"1.10",
+ "width":6
+}

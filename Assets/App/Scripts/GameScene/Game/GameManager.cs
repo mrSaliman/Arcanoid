@@ -10,7 +10,6 @@ namespace App.Scripts.GameScene.Game
 {
     [RequireComponent(typeof(GameContext))]
     [InfoBox("$GameState")]
-    [InfoBox("@rb.velocity.magnitude")]
     public class GameManager : MonoBehaviour
     {
         public GameState GameState { get; private set; }
@@ -26,6 +25,9 @@ namespace App.Scripts.GameScene.Game
          
         private void Awake()
         {
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 60;
+            
             context.RegisterInstance(this);
             _root = ProjectContext.Instance;
             _root.Construct();
