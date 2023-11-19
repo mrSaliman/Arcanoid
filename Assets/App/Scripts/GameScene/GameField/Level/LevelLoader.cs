@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Configs;
 using App.Scripts.GameScene.Game;
-using App.Scripts.GameScene.GameField.Model.Tiled;
+using App.Scripts.GameScene.GameField.Level.Tiled;
 using App.Scripts.Libs.JsonResourceLoader;
 using App.Scripts.Libs.ObjectPool;
 using UnityEngine;
 
-namespace App.Scripts.GameScene.GameField.Model
+namespace App.Scripts.GameScene.GameField.Level
 {
     public class LevelLoader
     {
-        private ObjectPool<Block> _blockPool;
+        private ObjectPool<Block.Block> _blockPool;
 
         public Dictionary<int, BlockSpriteAssociation> Tileset { get; private set; }
 
@@ -22,7 +22,7 @@ namespace App.Scripts.GameScene.GameField.Model
         public void Construct(GameFieldManager manager)
         {
             _settings = manager.levelLoaderSettings;
-            manager.BlockPool = new ObjectPool<Block>(() => new Block(), _settings.BlockPoolSize);
+            manager.BlockPool = new ObjectPool<Block.Block>(() => new Block.Block(), _settings.BlockPoolSize);
             _blockPool = manager.BlockPool;
             LoadTileset(manager.tilesetSettings);
         }
@@ -57,7 +57,7 @@ namespace App.Scripts.GameScene.GameField.Model
             for (var index = 0; index < layer.data.Length; index++)
             {
                 var tile = layer.data[index] - 1;
-                Block boundTile = null;
+                Block.Block boundTile = null;
                 if (Tileset.TryGetValue(tile, out var value))
                 {
                     boundTile = _blockPool.Get();

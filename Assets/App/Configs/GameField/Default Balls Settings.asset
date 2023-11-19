@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26f17c416fb94cb9a8a84d71e517b571, type: 3}
-  m_Name: Default Level Loader Settings
+  m_Script: {fileID: 11500000, guid: ab37018ea4ad4cfd8e49487c885e66de, type: 3}
+  m_Name: Default Balls Settings
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,9 +21,21 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: blockPoolSize
+    - Name: ballPoolSize
       Entry: 3
       Data: 20
-    - Name: tilesetPath
-      Entry: 1
-      Data: GameField/Tilesets/ArcanoidTiles
+    - Name: minReflectionAngle
+      Entry: 4
+      Data: 20.3
+    - Name: ballSpeed
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 6.081081
+    - Name: 
+      Entry: 4
+      Data: 12.5675669
+    - Name: 
+      Entry: 8
+      Data: 

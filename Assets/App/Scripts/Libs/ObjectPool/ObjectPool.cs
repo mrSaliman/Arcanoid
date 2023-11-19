@@ -23,12 +23,7 @@ namespace App.Scripts.Libs.ObjectPool
 
         public T Get()
         {
-            if (_objects.Count == 0)
-            {
-                return CreateObject();
-            }
-
-            var obj = _objects.Pop();
+            var obj = _objects.Count == 0 ? CreateObject() : _objects.Pop();
             obj.Activate();
             return obj;
         }

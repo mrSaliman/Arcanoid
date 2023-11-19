@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using App.Scripts.Configs;
 using App.Scripts.GameScene.Game;
-using App.Scripts.GameScene.GameField.Model;
+using App.Scripts.GameScene.GameField.Block;
 using App.Scripts.Libs.ObjectPool;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace App.Scripts.GameScene.GameField.View
+namespace App.Scripts.GameScene.GameField.Level
 {
     public class LevelView
     {
@@ -23,6 +23,9 @@ namespace App.Scripts.GameScene.GameField.View
         private Rect _cameraRect;
 
         private float _blockWidth, _blockHeight, _expandCoefficient;
+
+        private float _startBlockAmount;
+        public float Difficulity => 1 - _blocks.Count / _startBlockAmount;
 
         [GameInject]
         public void Construct(GameFieldManager manager, LevelLoader levelLoader, CameraInfoProvider cameraInfoProvider,
@@ -42,6 +45,7 @@ namespace App.Scripts.GameScene.GameField.View
         
         public void BuildLevelView(Level level)
         {
+            _startBlockAmount = 0;
             CalculateLevelSizes(level);
             for (var y = 0; y < level.Height; y++)
             {
@@ -49,6 +53,7 @@ namespace App.Scripts.GameScene.GameField.View
                 {
                     var block = level.GetBlock(x, y);
                     if (block is null) continue;
+                    _startBlockAmount++;
                     var blockView = _blockViewPool.Get();
                     blockView.SetSprite(_levelLoader.Tileset[level.GetTag(x, y)].sprite);
                     blockView.gridPosition = new Vector2Int(x, y);
@@ -64,7 +69,8 @@ namespace App.Scripts.GameScene.GameField.View
 
         private void CalculateLevelSizes(Level level)
         {
-            _blockWidth = (_cameraRect.width - (2 * _gameFieldSettings.HorizontalIndentation +
+            _blockWidth = (_cameraRect.width - 
+                           (2 * _gameFieldSettings.HorizontalIndentation +
                                                 _gameFieldSettings.BetweenBlockIndentation * (level.Width - 1))) /
                           level.Width;
             _expandCoefficient = _blockWidth / _gameFieldSettings.DefaultBlockSize.x;

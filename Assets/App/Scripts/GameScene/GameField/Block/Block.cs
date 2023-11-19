@@ -1,7 +1,7 @@
 ﻿using System;
 using App.Scripts.Libs.ObjectPool;
 
-namespace App.Scripts.GameScene.GameField.Model
+namespace App.Scripts.GameScene.GameField.Block
 {
     [Serializable]
     public class Block : IPoolable

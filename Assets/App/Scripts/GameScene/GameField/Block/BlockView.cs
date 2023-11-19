@@ -1,9 +1,8 @@
 ﻿using System;
 using App.Scripts.Libs.ObjectPool;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace App.Scripts.GameScene.GameField.View
+namespace App.Scripts.GameScene.GameField.Block
 {
     public class BlockView : MonoBehaviour, IPoolable
     {

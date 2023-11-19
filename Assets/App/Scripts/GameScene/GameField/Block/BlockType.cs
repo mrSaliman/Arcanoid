@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.GameScene.GameField.Model
+﻿namespace App.Scripts.GameScene.GameField.Block
 {
     public enum BlockType
     {

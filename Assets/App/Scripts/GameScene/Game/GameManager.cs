@@ -20,8 +20,6 @@ namespace App.Scripts.GameScene.Game
         
         [SerializeField]
         private bool autoRun = true;
-
-        public Rigidbody2D rb;
          
         private void Awake()
         {
@@ -40,7 +38,6 @@ namespace App.Scripts.GameScene.Game
                 ConstructGame();
                 InitGame();
                 StartGame();
-                rb.velocity = new Vector2(5, -5);
             }
         }
 

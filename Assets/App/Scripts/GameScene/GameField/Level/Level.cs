@@ -1,52 +1,50 @@
 ﻿using UnityEngine;
 
-namespace App.Scripts.GameScene.GameField.Model
+namespace App.Scripts.GameScene.GameField.Level
 {
     public class Level
     {
-        private readonly int _height;
-        private readonly int _width;
-        public readonly Block[] Blocks;
+        public readonly Block.Block[] Blocks;
         public readonly int[] Tags;
         
-        public int Height => _height;
-        public int Width => _width;
+        public int Height { get; }
+
+        public int Width { get; }
 
         public Level(int height, int width)
         {
-            _height = height;
-            _width = width;
-            Blocks = new Block[height * width];
+            Height = height;
+            Width = width;
+            Blocks = new Block.Block[height * width];
             Tags = new int[height * width];
         }
 
-        public Block GetBlock(int x, int y)
+        public Block.Block GetBlock(int x, int y)
         {
-            if (Fits(x, y)) return Blocks[x + y * _width];
+            if (Fits(x, y)) return Blocks[x + y * Width];
             Debug.LogError("Index is out of range");
             return null;
         }
         
         public int GetTag(int x, int y)
         {
-            if (Fits(x, y)) return Tags[x + y * _width];
+            if (Fits(x, y)) return Tags[x + y * Width];
             Debug.LogError("Index is out of range");
             return -1;
         }
 
-        public void SetBlock(Block block, int x, int y)
+        public void SetBlock(Block.Block block, int x, int y)
         {
             if (!Fits(x, y))
             {
                 Debug.LogError("Index is out of range");
                 return;
             }
-            Blocks[x + y * _width] = block;
+            Blocks[x + y * Width] = block;
             if (block is null) return;
-            block.OnHealthDepleted += BlockHealthDepletedHandler; 
         }
         
-        public void SetBlock(Block block, int index)
+        public void SetBlock(Block.Block block, int index)
         {
             if (!Fits(index))
             {
@@ -55,7 +53,6 @@ namespace App.Scripts.GameScene.GameField.Model
             }
             Blocks[index] = block;
             if (block is null) return;
-            block.OnHealthDepleted += BlockHealthDepletedHandler; 
         }
 
         public void RemoveBlock(int x, int y)
@@ -66,22 +63,17 @@ namespace App.Scripts.GameScene.GameField.Model
                 return;
             }
             
-            Blocks[x + y * _width] = null;
+            Blocks[x + y * Width] = null;
         }
 
         private bool Fits(int x, int y)
         {
-            return x >= 0 && x < _width && y >= 0 && y < _height;
+            return x >= 0 && x < Width && y >= 0 && y < Height;
         }
 
         private bool Fits(int index)
         {
             return index >= 0 && index <= Blocks.Length;
-        }
-
-        private void BlockHealthDepletedHandler()
-        {
-            Debug.Log("Block ded");
         }
     }
 }

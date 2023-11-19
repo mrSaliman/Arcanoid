@@ -1,17 +1,17 @@
-﻿using System;
-using App.Scripts.Configs;
+﻿using App.Scripts.Configs;
 using App.Scripts.GameScene.Game;
-using App.Scripts.Libs.ObjectPool;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace App.Scripts.GameScene.GameField.View
+namespace App.Scripts.GameScene.GameField.Platform
 {
     public class PlatformView : MonoBehaviour
     {
         [SerializeField] private PlatformSettings settings;
         [SerializeField] private PolygonCollider2D polygonCollider;
         [SerializeField] private Rigidbody2D platformRigidbody;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+
+        public Rigidbody2D PlatformRigidbody => platformRigidbody;
 
         private CameraInfoProvider _cameraInfoProvider;
         private Rect _cameraRect;
@@ -25,6 +25,12 @@ namespace App.Scripts.GameScene.GameField.View
             _cameraInfoProvider = cameraInfoProvider;
             _cameraRect = _cameraInfoProvider.CameraRect;
             _colliderSize = polygonCollider.bounds.size.x;
+        }
+
+        [GameInit]
+        public void Init()
+        {
+            transform.position = new Vector3(0, settings.BottomIndentation * _cameraRect.height + _cameraRect.yMin, 0);
         }
 
         public void MoveToTarget(float target)
@@ -42,6 +48,11 @@ namespace App.Scripts.GameScene.GameField.View
             var newScale = transform.localScale;
             newScale.x = _platformSize;
             transform.localScale = newScale;
+        }
+
+        public Vector3 GetAttachedBallPosition()
+        {
+            return transform.position + new Vector3(0, spriteRenderer.bounds.size.y / 2);
         }
     }
 }

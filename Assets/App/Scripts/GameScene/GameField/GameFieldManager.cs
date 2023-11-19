@@ -1,22 +1,26 @@
 ﻿using App.Scripts.AllScenes.ProjectContext;
 using App.Scripts.Configs;
 using App.Scripts.GameScene.Game;
-using App.Scripts.GameScene.GameField.Model;
-using App.Scripts.GameScene.GameField.View;
+using App.Scripts.GameScene.GameField.Ball;
+using App.Scripts.GameScene.GameField.Block;
+using App.Scripts.GameScene.GameField.Level;
 using App.Scripts.Libs.ObjectPool;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace App.Scripts.GameScene.GameField
 {
     public class GameFieldManager : MonoBehaviour
     {
-        public ObjectPool<Block> BlockPool;
+        public ObjectPool<Block.Block> BlockPool;
         public ObjectPool<BlockView> BlockViewPool;
-
+        public ObjectPool<BallView> BallViewPool;
+            
         [SerializeField] public TilesetSettings tilesetSettings;
         [SerializeField] public LevelLoaderSettings levelLoaderSettings;
         [SerializeField] public GameFieldSettings gameFieldSettings;
+        [SerializeField] public BallsSettings ballsSettings;
 
         [SerializeField] private EdgeCollider2D edgeCollider;
 
@@ -26,17 +30,18 @@ namespace App.Scripts.GameScene.GameField
         private LevelLoader _levelLoader;
         private CameraInfoProvider _cameraInfoProvider;
         private LevelView _levelView;
+        private BallsController _ballsController;
 
-        private Level _currentLevel;
-
-        public Level CurrentLevel => _currentLevel;
+        public Level.Level CurrentLevel { get; private set; }
 
         [GameInject]
-        public void Construct(LevelLoader levelLoader, CameraInfoProvider cameraInfoProvider, LevelView levelView)
+        public void Construct(LevelLoader levelLoader, CameraInfoProvider cameraInfoProvider, LevelView levelView,
+            BallsController ballsController)
         {
             _levelLoader = levelLoader;
             _cameraInfoProvider = cameraInfoProvider;
             _levelView = levelView;
+            _ballsController = ballsController;
         }
 
         [GameInit]
@@ -44,7 +49,9 @@ namespace App.Scripts.GameScene.GameField
         {
             SetupWalls();
             LoadCurrentLevel();
-            _levelView.BuildLevelView(_currentLevel);
+            _levelView.BuildLevelView(CurrentLevel);
+            _ballsController.Speed = ballsSettings.BallSpeed.x;
+            CreateGluedBall();
         }
 
         private void SetupWalls()
@@ -63,20 +70,27 @@ namespace App.Scripts.GameScene.GameField
 
         private void LoadCurrentLevel()
         {
-            _currentLevel = _levelLoader.LoadLevel(gameFieldSettings.DebugLevel);
+            CurrentLevel = _levelLoader.LoadLevel(gameFieldSettings.DebugLevel);
         }
 
         public void RemoveBlock(BlockView blockView)
         {
             _levelView.RemoveBlock(blockView);
-            BlockPool.Return(_currentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y));
-            _currentLevel.RemoveBlock(blockView.gridPosition.x, blockView.gridPosition.y);
+            BlockPool.Return(CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y));
+            CurrentLevel.RemoveBlock(blockView.gridPosition.x, blockView.gridPosition.y);
+        }
+
+        [Button]
+        private void CreateGluedBall()
+        {
+            var ball = _ballsController.CreateBall();
+            _ballsController.AttachBall(ball);
         }
 
         [Button]
         private void DealDamage(int damage, BlockView tile)
         {
-            _currentLevel.GetBlock(tile.gridPosition.x, tile.gridPosition.y).TakeDamage(damage);
+            CurrentLevel.GetBlock(tile.gridPosition.x, tile.gridPosition.y).TakeDamage(damage);
         }
     }
 }

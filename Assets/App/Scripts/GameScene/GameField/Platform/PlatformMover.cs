@@ -1,10 +1,7 @@
-﻿using System;
-using App.Scripts.GameScene.Game;
-using App.Scripts.GameScene.GameField.View;
+﻿using App.Scripts.GameScene.Game;
 using App.Scripts.Libs.NodeArchitecture;
-using UnityEngine;
 
-namespace App.Scripts.GameScene.GameField
+namespace App.Scripts.GameScene.GameField.Platform
 {
     public class PlatformMover : IContextFixedUpdate
     {

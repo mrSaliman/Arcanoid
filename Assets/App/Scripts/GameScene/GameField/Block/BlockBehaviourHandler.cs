@@ -1,20 +1,27 @@
 ﻿using System;
 using App.Scripts.GameScene.Game;
-using App.Scripts.GameScene.GameField.Model;
-using App.Scripts.GameScene.GameField.View;
+using App.Scripts.GameScene.GameField.Ball;
+using App.Scripts.GameScene.GameField.Level;
+using UnityEngine;
 
-namespace App.Scripts.GameScene.GameField
+namespace App.Scripts.GameScene.GameField.Block
 {
     public class BlockBehaviourHandler
     {
         private LevelView _levelView;
         private GameFieldManager _gameFieldManager;
+        private BallsController _ballsController;
+
+        private float _minSpeed, _speedAlpha; 
         
         [GameInject]
-        public void Construct(LevelView levelView, GameFieldManager manager)
+        public void Construct(LevelView levelView, GameFieldManager manager, BallsController ballsController)
         {
             _levelView = levelView;
             _gameFieldManager = manager;
+            _ballsController = ballsController;
+            _minSpeed = _gameFieldManager.ballsSettings.BallSpeed.x;
+            _speedAlpha = _gameFieldManager.ballsSettings.BallSpeed.y - _minSpeed;
         }
         
         public void HandleBlockDeath(BlockView blockView, Block block)
@@ -42,6 +49,7 @@ namespace App.Scripts.GameScene.GameField
         private void Delete(BlockView blockView)
         {
             _gameFieldManager.RemoveBlock(blockView);
+            _ballsController.Speed = _levelView.Difficulity * _speedAlpha + _minSpeed;
         }
     }
 }

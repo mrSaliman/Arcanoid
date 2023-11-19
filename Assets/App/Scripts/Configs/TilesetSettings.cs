@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.GameScene.GameField;
-using App.Scripts.GameScene.GameField.Model;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
