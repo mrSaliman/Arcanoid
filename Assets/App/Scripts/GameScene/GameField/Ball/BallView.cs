@@ -8,6 +8,7 @@ namespace App.Scripts.GameScene.GameField.Ball
     {
         [SerializeField] private Rigidbody2D mainRigidbody;
         [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private CircleCollider2D mainCollider;
         
         public Rigidbody2D MainRigidbody => mainRigidbody;
         public SpriteRenderer SpriteRenderer => spriteRenderer;
@@ -33,6 +34,7 @@ namespace App.Scripts.GameScene.GameField.Ball
         public void SetSimulated(bool simulated)
         {
             mainRigidbody.simulated = simulated;
+            mainCollider.enabled = simulated;
         }
 
         public void Show()

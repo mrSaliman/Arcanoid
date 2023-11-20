@@ -21,7 +21,6 @@ namespace App.Scripts.GameScene.GameField
         
         protected override void OnConstruct()
         {
-            RegisterInstance(gameFieldManager);
             RegisterInstance(_levelLoader);
             RegisterInstance(_levelView);
             RegisterInstance(_blockBehaviourHandler);
@@ -29,6 +28,7 @@ namespace App.Scripts.GameScene.GameField
             RegisterInstance(_platformMover);
             RegisterInstance(_ballsController);
             RegisterInstance(_ballCollisionController);
+            RegisterInstance(gameFieldManager);
         }
     }
 }

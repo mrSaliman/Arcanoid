@@ -58,7 +58,8 @@ namespace App.Scripts.GameScene.GameField.Ball
         {
             _attachedBalls.Add(ball);
             var position = GetPlatformPosition(ball);
-            ball.SetPosition(position);
+            //ball.SetPosition(position);
+            ball.transform.position = position;
             ball.SetSimulated(true);
         }
 
