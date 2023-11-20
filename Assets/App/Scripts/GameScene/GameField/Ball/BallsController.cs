@@ -57,13 +57,15 @@ namespace App.Scripts.GameScene.GameField.Ball
         public void AttachBall(BallView ball)
         {
             _attachedBalls.Add(ball);
-            SetPlatformPosition(ball);
+            var position = GetPlatformPosition(ball);
+            ball.SetPosition(position);
             ball.SetSimulated(true);
         }
 
-        private void SetPlatformPosition(BallView ball)
+        private Vector3 GetPlatformPosition(BallView ball)
         {
-            ball.SetPosition(_platformView.GetAttachedBallPosition() + new Vector3(0, ball.SpriteRenderer.bounds.size.y / 2));
+            return _platformView.GetAttachedBallPosition() + new Vector3(0,
+                ball.SpriteRenderer.bounds.size.y / 2);
         }
 
         private void ReleaseBalls()
@@ -82,7 +84,7 @@ namespace App.Scripts.GameScene.GameField.Ball
             
             foreach (var ball in _attachedBalls)
             {
-                SetPlatformPosition(ball);
+                ball.SetPosition(GetPlatformPosition(ball));
             }
         }
     }

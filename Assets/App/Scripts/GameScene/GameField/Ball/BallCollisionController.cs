@@ -24,9 +24,10 @@ namespace App.Scripts.GameScene.GameField.Ball
         {
             if (!other.gameObject.TryGetComponent<PlatformView>(out _)) CalibrateDirection(ball, other);
             
-            if (other.gameObject.TryGetComponent(out BlockView block))
+            if (other.gameObject.TryGetComponent(out BlockView blockView))
             {
-                _gameFieldManager.CurrentLevel.GetBlock(block.gridPosition.x, block.gridPosition.y).TakeDamage(1);
+                var block = _gameFieldManager.CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y); 
+                block?.TakeDamage(1);
             }
             
             CalibrateSpeed(ball);

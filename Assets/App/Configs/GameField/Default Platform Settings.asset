@@ -13,32 +13,11 @@ MonoBehaviour:
   m_Name: Default Platform Settings
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 1f010d00000070006c006100740066006f0072006d00530070006500650064000000484203010c00000070006c006100740066006f0072006d00530069007a0065002f00000000012b00000055006e0069007400790045006e00670069006e0065002e0056006500630074006f00720032002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c00650020902d993d20ff2fa03f051f011100000062006f00740074006f006d0049006e00640065006e0074006100740069006f006e005c21f53d1f010a00000073006d006f006f00740068006e0065007300730000000040
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: platformSpeed
-      Entry: 4
-      Data: 30
-    - Name: platformSize
-      Entry: 7
-      Data: UnityEngine.Vector2, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0.0747939348
-    - Name: 
-      Entry: 4
-      Data: 1.25146472
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: bottomIndentation
-      Entry: 4
-      Data: 0.119692534
-    - Name: smoothness
-      Entry: 4
-      Data: 1
+    SerializationNodes: []

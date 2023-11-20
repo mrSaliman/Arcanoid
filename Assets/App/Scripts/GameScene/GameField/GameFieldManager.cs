@@ -1,5 +1,4 @@
-﻿using App.Scripts.AllScenes.ProjectContext;
-using App.Scripts.Configs;
+﻿using App.Scripts.Configs;
 using App.Scripts.GameScene.Game;
 using App.Scripts.GameScene.GameField.Ball;
 using App.Scripts.GameScene.GameField.Block;
@@ -7,7 +6,6 @@ using App.Scripts.GameScene.GameField.Level;
 using App.Scripts.Libs.ObjectPool;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace App.Scripts.GameScene.GameField
 {
@@ -23,6 +21,7 @@ namespace App.Scripts.GameScene.GameField
         [SerializeField] public BallsSettings ballsSettings;
 
         [SerializeField] private EdgeCollider2D edgeCollider;
+        [SerializeField] private BoxCollider2D deathZone;
 
         public Transform blockContainer;
         public Transform ballContainer;
@@ -56,7 +55,6 @@ namespace App.Scripts.GameScene.GameField
 
         private void SetupWalls()
         {
-            edgeCollider.enabled = true;
             var cameraRect = _cameraInfoProvider.CameraRect;
             edgeCollider.points = new[]
             {
@@ -64,8 +62,14 @@ namespace App.Scripts.GameScene.GameField
                 new Vector2(cameraRect.xMin, cameraRect.yMax),
                 new Vector2(cameraRect.xMax, cameraRect.yMax),
                 new Vector2(cameraRect.xMax, cameraRect.yMin),
-                new Vector2(cameraRect.xMin, cameraRect.yMin),
             };
+            edgeCollider.enabled = true;
+
+            var deathZoneSize = deathZone.size;
+            deathZone.offset = new Vector2(0, cameraRect.yMin - deathZoneSize.y / 2);
+            deathZoneSize.x = cameraRect.size.x;
+            deathZone.size = deathZoneSize;
+            deathZone.enabled = true;
         }
 
         private void LoadCurrentLevel()
@@ -85,12 +89,21 @@ namespace App.Scripts.GameScene.GameField
         {
             var ball = _ballsController.CreateBall();
             _ballsController.AttachBall(ball);
+            ball.Show();
         }
 
         [Button]
         private void DealDamage(int damage, BlockView tile)
         {
             CurrentLevel.GetBlock(tile.gridPosition.x, tile.gridPosition.y).TakeDamage(damage);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.TryGetComponent(out BallView ball))
+            {
+                _ballsController.DeleteBall(ball);
+            }
         }
     }
 }

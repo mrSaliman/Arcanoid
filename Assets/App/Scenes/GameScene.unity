@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 742005425}
   - component: {fileID: 742005424}
   - component: {fileID: 742005426}
+  - component: {fileID: 742005427}
   m_Layer: 0
   m_Name: GameField
   m_TagString: Untagged
@@ -292,6 +293,7 @@ MonoBehaviour:
   gameFieldSettings: {fileID: 11400000, guid: 28c99e1cf76e7704b861a907163fdfd9, type: 2}
   ballsSettings: {fileID: 11400000, guid: b4885da70b900e4489c45afc51c45747, type: 2}
   edgeCollider: {fileID: 742005426}
+  deathZone: {fileID: 742005427}
   blockContainer: {fileID: 897242166}
   ballContainer: {fileID: 484483367}
 --- !u!114 &742005425
@@ -331,6 +333,32 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!61 &742005427
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742005422}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &789307219
 GameObject:
   m_ObjectHideFlags: 0

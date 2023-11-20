@@ -35,6 +35,16 @@ namespace App.Scripts.GameScene.GameField.Ball
             mainRigidbody.simulated = simulated;
         }
 
+        public void Show()
+        {
+            spriteRenderer.enabled = true;
+        }
+
+        public void Hide()
+        {
+            spriteRenderer.enabled = false;
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             OnCollisionEnterEvent?.Invoke(this, other);
@@ -52,10 +62,12 @@ namespace App.Scripts.GameScene.GameField.Ball
 
         public void Deactivate()
         {
+            Hide();
             OnCollisionEnterEvent = null;
             OnCollisionExitEvent = null;
             SetVelocity(Vector2.zero);
             SetSimulated(false);
+            gameObject.transform.position = Vector3.zero;
             gameObject.SetActive(false);
         }
     }
