@@ -25,5 +25,17 @@ namespace App.Scripts.AllScenes.UI
         {
             label.text = _text + _data;
         }
+
+        public Color color
+        {
+            get => label.color;
+            set => label.color = value;
+        }
+
+        public float fontSize
+        {
+            get => label.fontSize;
+            set => label.fontSize = value;
+        }
     }
 }

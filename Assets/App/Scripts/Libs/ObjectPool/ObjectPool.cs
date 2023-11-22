@@ -53,7 +53,4 @@ namespace App.Scripts.Libs.ObjectPool
             }
         }
     }
-
-
-
 }
