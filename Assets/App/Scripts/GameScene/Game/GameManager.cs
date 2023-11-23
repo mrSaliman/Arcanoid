@@ -21,7 +21,7 @@ namespace App.Scripts.GameScene.Game
         [SerializeField]
         private bool autoRun = true;
          
-        private void Awake()
+        private void Start()
         {
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = 60;
@@ -39,6 +39,11 @@ namespace App.Scripts.GameScene.Game
                 InitGame();
                 StartGame();
             }
+        }
+        
+        public void Secede()
+        {
+            _root.RemoveChild(context);
         }
 
         private void Update()

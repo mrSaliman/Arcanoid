@@ -79,6 +79,7 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
         {
             if (Fit) _popup.Fit();
             if (ActivateBackButton) _popup.BackButton.onClick.AddListener(() => _popupManager.Return(_popup));
+            _popupManager.AddPopup(_popup);
             return _popup;
         }
     }

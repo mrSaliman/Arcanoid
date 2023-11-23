@@ -2,6 +2,7 @@
 using App.Scripts.AllScenes.ProjectContext.Pop_Up;
 using App.Scripts.AllScenes.UI;
 using App.Scripts.GameScene.Game;
+using App.Scripts.MainMenu.Menu;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,13 +16,18 @@ namespace App.Scripts.MainMenu.UI
         private PopupManager _popupManager;
         private LabelController _labelController;
         private LocalizationManager _localizationManager;
+        private SceneSwitcher _sceneSwitcher;
+        private MenuManager _menuManager;
 
         [GameInject]
-        public void Construct(PopupManager popupManager, LabelController labelController, LocalizationManager localizationManager)
+        public void Construct(PopupManager popupManager, LabelController labelController,
+            LocalizationManager localizationManager, SceneSwitcher sceneSwitcher, MenuManager menuManager)
         {
             _popupManager = popupManager;
             _labelController = labelController;
             _localizationManager = localizationManager;
+            _sceneSwitcher = sceneSwitcher;
+            _menuManager = menuManager;
         }
         
         [GameInit]
@@ -50,9 +56,11 @@ namespace App.Scripts.MainMenu.UI
             popup.gameObject.SetActive(true);
         }
 
-        private void HandlePlayButtonClicked()
+        private async void HandlePlayButtonClicked()
         {
-            
+            _popupManager.Clean();
+            _menuManager.Secede();
+            await _sceneSwitcher.LoadSceneAsync("GameScene");
         }
     }
 }
