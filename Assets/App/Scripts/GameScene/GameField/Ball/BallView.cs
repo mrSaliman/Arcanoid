@@ -18,7 +18,7 @@ namespace App.Scripts.GameScene.GameField.Ball
 
         public void SetPosition(Vector2 position)
         {
-            mainRigidbody.position = position;
+            transform.position = position;
         }
         
         public void SetVelocity(Vector2 velocity)
