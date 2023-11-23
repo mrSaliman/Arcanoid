@@ -10,10 +10,7 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
         private readonly Popup _popup;
         private readonly RectTransform _contentContainer;
 
-        public void Fit(bool fit)
-        {
-            _popup.Fit(fit);
-        }
+        public bool Fit = false;
 
         public bool vertical
         {
@@ -79,7 +76,7 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
 
         public Popup Build()
         {
-            _popup.Refresh();
+            if (Fit) _popup.Fit();
             return _popup;
         }
     }

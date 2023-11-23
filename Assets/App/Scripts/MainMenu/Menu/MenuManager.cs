@@ -49,9 +49,11 @@ namespace App.Scripts.MainMenu.Menu
         [Button]
         private void AddPopup()
         {
-            var builder = new PopupBuilder(_popupManager);
-            builder.Fit(true);
-            builder.vertical = false;
+            var builder = new PopupBuilder(_popupManager)
+            {
+                vertical = false,
+                Fit = true
+            };
             builder.AddLabel(_labelController, "continue", 60, Color.green)
                 .AddButton(_labelController, "pause", 40, Color.yellow, () => Debug.Log("pause clicked"))
                 .AddButton(_labelController, "play", 40, Color.red, () => Debug.Log("play clicked"))

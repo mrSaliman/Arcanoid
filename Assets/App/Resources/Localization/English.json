@@ -2,5 +2,6 @@
   "example": "English",
   "pause" : "Pause",
   "continue" : "Continue",
-  "play" : "Play"
+  "play" : "Play",
+  "stop" : "Stop"
 }

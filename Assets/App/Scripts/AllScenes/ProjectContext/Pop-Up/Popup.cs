@@ -9,8 +9,6 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
     {
         [SerializeField]
         private ScrollRect scrollRect;
-
-        [SerializeField] private ContentSizeFitter mainFitter, viewFitter;
         public RectTransform ContentContainer => scrollRect.content;
     
         private PopupManager _manager;
@@ -23,23 +21,21 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
             _manager = manager;
         }
 
-        public void Refresh()
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.viewport);
-            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
-        }
-
-        public void Fit(bool fit)
-        {
-            viewFitter.enabled = fit;
-            mainFitter.enabled = fit;
-        }
-
         public bool vertical
         {
             get => scrollRect.vertical;
             set => scrollRect.vertical = value;
+        }
+
+        public void Fit()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
+            var rectTransform = (RectTransform)transform;
+            var sizeDelta = rectTransform.sizeDelta;
+            sizeDelta.y = scrollRect.content.sizeDelta.y - scrollRect.viewport.offsetMax.y +
+                          scrollRect.viewport.offsetMin.y + 5;
+            rectTransform.sizeDelta = sizeDelta;
         }
 
         public void AddPoolableElement<T>(T element) where T : IPoolable
@@ -73,7 +69,6 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
             _manager = null;
             
             vertical = true;
-            Fit(false);
             gameObject.SetActive(false);
         }
     }
