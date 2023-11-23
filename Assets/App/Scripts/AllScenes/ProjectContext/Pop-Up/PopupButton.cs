@@ -29,6 +29,7 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
 
         public void Deactivate()
         {
+            button.onClick.RemoveAllListeners();
             gameObject.SetActive(false);
         }
     }

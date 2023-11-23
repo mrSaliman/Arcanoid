@@ -4,6 +4,7 @@ using App.Scripts.AllScenes.ProjectContext.Pop_Up;
 using App.Scripts.AllScenes.UI;
 using App.Scripts.GameScene.Game;
 using App.Scripts.Libs.NodeArchitecture;
+using App.Scripts.MainMenu.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace App.Scripts.MainMenu.Menu
         private ContextNode _root;
 
         [SerializeField]
-        private UIContext uiContext;
+        private MainMenuUIContext uiContext;
         private LabelController _labelController;
         private PopupManager _popupManager;
         private Popup _currentPopup;
@@ -51,7 +52,7 @@ namespace App.Scripts.MainMenu.Menu
         {
             var builder = new PopupBuilder(_popupManager)
             {
-                vertical = false,
+                VerticalScroll = false,
                 Fit = true
             };
             builder.AddLabel(_labelController, "continue", 60, Color.green)

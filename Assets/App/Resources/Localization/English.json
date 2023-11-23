@@ -3,5 +3,7 @@
   "pause" : "Pause",
   "continue" : "Continue",
   "play" : "Play",
-  "stop" : "Stop"
+  "stop" : "Stop",
+  "English" : "English",
+  "Russian" : "Русский"
 }

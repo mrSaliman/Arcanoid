@@ -9,6 +9,11 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
     {
         [SerializeField]
         private ScrollRect scrollRect;
+
+        [SerializeField] private RectTransform mainRectTransform;
+        [SerializeField] private Button backButton;
+        
+        public Button BackButton => backButton;
         public RectTransform ContentContainer => scrollRect.content;
     
         private PopupManager _manager;
@@ -21,7 +26,7 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
             _manager = manager;
         }
 
-        public bool vertical
+        public bool VerticalScroll
         {
             get => scrollRect.vertical;
             set => scrollRect.vertical = value;
@@ -31,11 +36,15 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
-            var rectTransform = (RectTransform)transform;
-            var sizeDelta = rectTransform.sizeDelta;
-            sizeDelta.y = scrollRect.content.sizeDelta.y - scrollRect.viewport.offsetMax.y +
-                          scrollRect.viewport.offsetMin.y + 5;
-            rectTransform.sizeDelta = sizeDelta;
+            SetHeight(scrollRect.content.sizeDelta.y - scrollRect.viewport.offsetMax.y +
+                      scrollRect.viewport.offsetMin.y + 5);
+        }
+
+        public void SetHeight(float height)
+        {
+            var sizeDelta = mainRectTransform.sizeDelta;
+            sizeDelta.y = height;
+            mainRectTransform.sizeDelta = sizeDelta;
         }
 
         public void AddPoolableElement<T>(T element) where T : IPoolable
@@ -67,8 +76,9 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
             _poolableElements.Clear();
     
             _manager = null;
+            backButton.onClick.RemoveAllListeners();
             
-            vertical = true;
+            VerticalScroll = true;
             gameObject.SetActive(false);
         }
     }

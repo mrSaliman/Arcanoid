@@ -11,7 +11,9 @@ namespace App.Scripts.AllScenes.ProjectContext
     public class LocalizationManager
     {
         [SerializeField] private LocalizationSettings localizationSettings;
-        
+
+        public LocalizationSettings LocalizationSettings => localizationSettings;
+
         private readonly Dictionary<SystemLanguage, Dictionary<string, string>> _translations = new(); 
         private SystemLanguage _currentLanguage;
 
@@ -31,7 +33,7 @@ namespace App.Scripts.AllScenes.ProjectContext
             if (_translations.ContainsKey(language)) return;
             _translations[language] =
                 JsonResourceLoader.LoadFromResources<Dictionary<string, string>>(localizationSettings.LocalesFolder +
-                    language);
+                    "/" + language);
             _currentLanguage = language;
         }
 

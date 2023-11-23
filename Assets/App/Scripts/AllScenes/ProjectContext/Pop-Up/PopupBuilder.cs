@@ -1,6 +1,6 @@
 ﻿using App.Scripts.AllScenes.UI;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
 {
@@ -10,12 +10,13 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
         private readonly Popup _popup;
         private readonly RectTransform _contentContainer;
 
-        public bool Fit = false;
+        public bool Fit = false, 
+            ActivateBackButton = true;
 
-        public bool vertical
+        public bool VerticalScroll
         {
-            get => _popup.vertical;
-            set => _popup.vertical = value;
+            get => _popup.VerticalScroll;
+            set => _popup.VerticalScroll = value;
         }
 
         public PopupBuilder(PopupManager popupManager)
@@ -43,7 +44,7 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
         }
 
         public PopupBuilder AddButton(LabelController labelController, string key, float fontSize, Color color,
-            UnityEngine.Events.UnityAction onClick)
+            UnityAction onClick)
         {
             if (_contentContainer == null) return this;
             
@@ -77,6 +78,7 @@ namespace App.Scripts.AllScenes.ProjectContext.Pop_Up
         public Popup Build()
         {
             if (Fit) _popup.Fit();
+            if (ActivateBackButton) _popup.BackButton.onClick.AddListener(() => _popupManager.Return(_popup));
             return _popup;
         }
     }
