@@ -1,5 +1,5 @@
-﻿using App.Scripts.GameScene.GameField.Ball;
-using App.Scripts.GameScene.GameField.Block;
+﻿using App.Scripts.Scenes.GameScene.GameField.Ball;
+using App.Scripts.Scenes.GameScene.GameField.Block;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;

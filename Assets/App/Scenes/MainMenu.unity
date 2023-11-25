@@ -154,8 +154,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 417581286}
   - {fileID: 1918567129}
+  - {fileID: 417581286}
   m_Father: {fileID: 557131928}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -183,7 +183,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: _labels
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Collections.Generic.List`1[[App.Scripts.AllScenes.UI.LocalizedLabel,
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Collections.Generic.List`1[[App.Scripts.Scenes.AllScenes.UI.ControlledLabel,
         Assembly-CSharp]], mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
@@ -203,7 +203,7 @@ MonoBehaviour:
       Data: play
     - Name: $v
       Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[App.Scripts.AllScenes.UI.LocalizedLabel,
+      Data: 2|System.Collections.Generic.List`1[[App.Scripts.Scenes.AllScenes.UI.ControlledLabel,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
@@ -368,7 +368,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.09019608, g: 0.08627451, b: 0.22745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -661,7 +661,7 @@ RectTransform:
   - {fileID: 1975499579}
   - {fileID: 1036690191}
   m_Father: {fileID: 137754830}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -715,8 +715,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   context: {fileID: 557131930}
-  uiContext: {fileID: 137754832}
-  canvas: {fileID: 417581286}
 --- !u!114 &557131930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,7 +1113,7 @@ RectTransform:
   m_Children:
   - {fileID: 2019976864}
   m_Father: {fileID: 137754830}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1154,7 +1152,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 768, y: 1366}
+  m_ReferenceResolution: {x: 2020, y: 1500}
   m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1410,7 +1408,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 768, y: 1366}
+  m_SizeDelta: {x: 2020, y: 1500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2019976865
 MonoBehaviour:
@@ -1425,7 +1423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

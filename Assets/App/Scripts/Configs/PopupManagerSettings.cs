@@ -1,4 +1,4 @@
-﻿using App.Scripts.AllScenes.ProjectContext.Pop_Up;
+﻿using App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;

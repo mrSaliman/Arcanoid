@@ -1,5 +1,5 @@
 ﻿using System;
-using App.Scripts.GameScene.GameField.Block;
+using App.Scripts.Scenes.GameScene.GameField.Block;
 using UnityEngine;
 
 namespace App.Scripts.Configs
