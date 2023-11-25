@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Configs;
+using App.Scripts.Libs.DataManager;
 using App.Scripts.Libs.ObjectPool;
 using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.GameScene.GameField.Ball;
@@ -30,17 +31,19 @@ namespace App.Scripts.Scenes.GameScene.GameField
         private GameFieldInfoProvider _gameFieldInfoProvider;
         private LevelView _levelView;
         private BallsController _ballsController;
+        private HealthController _healthController;
 
         public Level.Level CurrentLevel { get; private set; }
 
         [GameInject]
         public void Construct(LevelLoader levelLoader, GameFieldInfoProvider gameFieldInfoProvider, LevelView levelView,
-            BallsController ballsController)
+            BallsController ballsController, HealthController healthController)
         {
             _levelLoader = levelLoader;
             _gameFieldInfoProvider = gameFieldInfoProvider;
             _levelView = levelView;
             _ballsController = ballsController;
+            _healthController = healthController;
         }
 
         [GameInit]
@@ -95,7 +98,7 @@ namespace App.Scripts.Scenes.GameScene.GameField
         [Button]
         private void DealDamage(int damage, BlockView tile)
         {
-            CurrentLevel.GetBlock(tile.gridPosition.x, tile.gridPosition.y).TakeDamage(damage);
+            CurrentLevel.GetBlock(tile.gridPosition.x, tile.gridPosition.y)?.TakeDamage(damage);
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -103,6 +106,7 @@ namespace App.Scripts.Scenes.GameScene.GameField
             if (other.gameObject.TryGetComponent(out BallView ball))
             {
                 _ballsController.DeleteBall(ball);
+                _healthController.DealDamage(1);
             }
         }
     }

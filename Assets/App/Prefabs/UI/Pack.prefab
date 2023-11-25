@@ -636,6 +636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 3526593899676593834}
+  Localized: 1
 --- !u!114 &3526593899676593834
 MonoBehaviour:
   m_ObjectHideFlags: 0

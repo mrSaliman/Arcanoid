@@ -9,6 +9,8 @@ namespace App.Scripts.Scenes.AllScenes.UI
 
         private string _text, _data;
 
+        public bool Localized;
+
         public void SetText(string text)
         {
             _text = text;

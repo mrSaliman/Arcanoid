@@ -13,7 +13,6 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext
 
             while (async.progress < 0.89)
             {
-                Debug.Log($"Progress: {async.progress}");
                 await UniTask.Yield();
             }
 

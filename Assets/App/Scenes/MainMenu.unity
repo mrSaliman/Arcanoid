@@ -565,6 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 413118096}
+  Localized: 1
 --- !u!1 &417581282
 GameObject:
   m_ObjectHideFlags: 0

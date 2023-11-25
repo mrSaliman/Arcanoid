@@ -56,6 +56,7 @@ namespace App.Scripts.Scenes.AllScenes.UI
                 var textToSet = _localizationManager.GetLocalizedString(labelSet.Key);
                 foreach (var label in labelSet.Value)
                 {
+                    if (!label.Localized) continue;
                     label.SetText(textToSet);
                 }
             }

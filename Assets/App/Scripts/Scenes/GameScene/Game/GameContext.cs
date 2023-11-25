@@ -9,13 +9,15 @@ namespace App.Scripts.Scenes.GameScene.Game
     {
         private DataManager _dataManager = new();
         private MouseInput _mouseInput = new();
-        [FormerlySerializedAs("cameraInfoProvider")] [SerializeField] private GameFieldInfoProvider gameFieldInfoProvider;
+        [SerializeField] private GameFieldInfoProvider gameFieldInfoProvider;
+        [SerializeField] private HealthController healthController = new();
         
         protected override void OnConstruct()
         {
             RegisterInstance(_mouseInput);
             RegisterInstance(_dataManager);
             RegisterInstance(gameFieldInfoProvider);
+            RegisterInstance(healthController);
         }
     }
 }
