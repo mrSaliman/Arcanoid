@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.AllScenes.ProjectContext;
+﻿using App.Scripts.Configs;
+using App.Scripts.Scenes.AllScenes.ProjectContext;
 using App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up;
 using App.Scripts.Scenes.AllScenes.UI;
 using App.Scripts.Scenes.GameScene.Game;
@@ -11,8 +12,9 @@ namespace App.Scripts.Scenes.PacksScene.UI
     public class PacksUIController : MonoBehaviour
     {
         [SerializeField] private RectTransform packsContainer;
-        [SerializeField] private Button packButtonPrefab;
+        [SerializeField] private PackButton packButtonPrefab;
         [SerializeField] private Button backButton;
+        [SerializeField] private LevelPacks packs;
 
         private LabelController _labelController;
         private PopupManager _popupManager;
@@ -33,6 +35,7 @@ namespace App.Scripts.Scenes.PacksScene.UI
         public void Init()
         {
             backButton.onClick.AddListener(HandleBackButtonClicked);
+            ShowPacks();
         }
         
         private async void HandleBackButtonClicked()
@@ -40,6 +43,18 @@ namespace App.Scripts.Scenes.PacksScene.UI
             _popupManager.Clean();
             _packsManager.Secede();
             await _sceneSwitcher.LoadSceneAsync("MainMenu");
+        }
+
+        private void ShowPacks()
+        {
+            foreach (var pack in packs.Packs)
+            {
+                var packButton = Instantiate(packButtonPrefab, packsContainer);
+                packButton.sprite = pack.galaxyPicture;
+                packButton.color = pack.buttonColor;
+                packButton.onClick.AddListener(() => { }); //TODO add listener
+                _labelController.AddLabel(pack.name, packButton.Label);
+            }
         }
     }
 }

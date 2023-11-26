@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using App.Scripts.Scenes.AllScenes.UI;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.PacksScene.UI
@@ -9,7 +10,15 @@ namespace App.Scripts.Scenes.PacksScene.UI
 
         [SerializeField] private Image glow, border, galaxy;
 
-        public Button Button => button;
+        [SerializeField] private ControlledLabel label;
+
+        public ControlledLabel Label => label;
+
+        public Button.ButtonClickedEvent onClick
+        {
+            get => button.onClick;
+            set => button.onClick = value;
+        }
 
         public Color color
         {

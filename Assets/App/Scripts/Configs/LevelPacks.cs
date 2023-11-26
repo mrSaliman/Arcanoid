@@ -11,5 +11,7 @@ namespace App.Scripts.Configs
     {
         [HideReferenceObjectPicker]
         [OdinSerialize] private List<LevelPack> packs;
+
+        public List<LevelPack> Packs => packs;
     }
 }

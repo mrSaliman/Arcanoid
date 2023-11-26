@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -23,7 +24,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: startLanguage
       Entry: 3
-      Data: 30
+      Data: 10
     - Name: localesFolder
       Entry: 1
       Data: Localization
@@ -40,6 +41,9 @@ MonoBehaviour:
     - Name: Language
       Entry: 3
       Data: 30
+    - Name: _parent
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -49,6 +53,9 @@ MonoBehaviour:
     - Name: Language
       Entry: 3
       Data: 10
+    - Name: _parent
+      Entry: 10
+      Data: 0
     - Name: 
       Entry: 8
       Data: 

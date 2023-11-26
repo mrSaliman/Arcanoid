@@ -30,7 +30,7 @@ namespace App.Scripts.Configs
         public class AvailableLanguage
         {
             public SystemLanguage Language;
-            private LocalizationSettings _parent;
+            [OdinSerialize] [HideInInspector] private LocalizationSettings _parent;
 
             public AvailableLanguage(LocalizationSettings parent)
             {

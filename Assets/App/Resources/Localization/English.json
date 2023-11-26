@@ -6,5 +6,8 @@
   "stop" : "Stop",
   "English" : "English",
   "Russian" : "Русский",
-  "menu" : "Menu"
+  "menu" : "Menu",
+  "cigar" : "Cigar\nGalaxy",
+  "sombrero" : "Sombrero\nGalaxy",
+  "milky-way" : "Milky Way\nGalaxy"
 }

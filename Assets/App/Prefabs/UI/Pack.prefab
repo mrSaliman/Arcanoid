@@ -113,6 +113,7 @@ MonoBehaviour:
   glow: {fileID: 436582059467435673}
   border: {fileID: 436582058458900406}
   galaxy: {fileID: 436582058051472064}
+  label: {fileID: 7730051720364755135}
 --- !u!1 &436582058051472062
 GameObject:
   m_ObjectHideFlags: 0

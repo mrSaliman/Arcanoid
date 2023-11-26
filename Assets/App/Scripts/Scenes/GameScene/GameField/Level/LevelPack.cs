@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.GameField.Level
 {
@@ -8,8 +9,11 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
     public class LevelPack
     {
         public string name;
-        [HideReferenceObjectPicker]
-        [LabelText("$name")]
+        [PreviewField] public Sprite galaxyPicture;
+
+        public Color buttonColor;
+
+        [HideReferenceObjectPicker] [LabelText("$name")]
         public List<LevelPath> pack;
     }
 }
