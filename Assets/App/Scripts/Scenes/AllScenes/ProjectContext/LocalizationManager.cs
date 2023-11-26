@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.Scripts.Configs;
-using App.Scripts.Libs.JsonResourceLoader;
+using App.Scripts.Libs.JsonDataService;
 using App.Scripts.Scenes.GameScene.Game;
 using UnityEngine;
 
@@ -29,7 +29,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext
         {
             if (_translations.ContainsKey(language)) return;
             _translations[language] =
-                JsonResourceLoader.LoadFromResources<Dictionary<string, string>>(localizationSettings.LocalesFolder +
+                JsonDataService.LoadFromResources<Dictionary<string, string>>(localizationSettings.LocalesFolder +
                     "/" + language);
             _currentLanguage = language;
         }

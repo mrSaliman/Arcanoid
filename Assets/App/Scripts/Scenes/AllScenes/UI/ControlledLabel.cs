@@ -34,6 +34,12 @@ namespace App.Scripts.Scenes.AllScenes.UI
             set => label.color = value;
         }
 
+        public bool enableVertexGradient
+        {
+            get => label.enableVertexGradient;
+            set => label.enableVertexGradient = value;
+        }
+
         public float fontSize
         {
             get => label.fontSize;

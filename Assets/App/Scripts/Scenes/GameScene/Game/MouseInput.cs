@@ -18,18 +18,32 @@ namespace App.Scripts.Scenes.GameScene.Game
 
         private Rect _mouseInputZone;
         private GameFieldInfoProvider _gameFieldInfoProvider;
+        private GameManager _gameManager;
         
 
         [GameInject]
-        public void Construct(GameFieldInfoProvider gameFieldInfoProvider)
+        public void Construct(GameFieldInfoProvider gameFieldInfoProvider, GameManager gameManager)
         {
             _gameFieldInfoProvider = gameFieldInfoProvider;
             _mouseInputZone = _gameFieldInfoProvider.GameFieldRect;
-            _mouseInputZone.yMax -= 0.1f * _mouseInputZone.height;
+            _gameManager = gameManager;
+        }
+
+        [GamePause]
+        public void Pause()
+        {
+            LeftButton = ButtonState.Free;
+        }
+        
+        [GameFinish]
+        public void Finish()
+        {
+            LeftButton = ButtonState.Free;
         }
         
         public void OnUpdate()
         {
+            if (_gameManager.GameState != GameState.Playing) return;
             Position = _gameFieldInfoProvider.mainCamera.ScreenToWorldPoint(Input.mousePosition);
             if (_mouseInputZone.Contains(Position))
             {

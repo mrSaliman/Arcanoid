@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.AllScenes.UI;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +27,14 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             _contentContainer = _popup.ContentContainer;
             _popup.Construct(_popupManager);
         }
+        
+        public void AddBackAction(UnityAction onClick)
+        {
+            _popup.BackButton.onClick.AddListener(onClick);
+        }
 
+        public UnityAction GetBackButtonInvocation => () => _popup.BackButton.onClick.Invoke();
+        
         public PopupBuilder AddLabel(LabelController labelController, string key, float fontSize, Color color)
         {
             if (_contentContainer == null) return this;

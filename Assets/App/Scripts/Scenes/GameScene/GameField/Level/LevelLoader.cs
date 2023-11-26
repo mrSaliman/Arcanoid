@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Configs;
-using App.Scripts.Libs.JsonResourceLoader;
+using App.Scripts.Libs.JsonDataService;
 using App.Scripts.Libs.ObjectPool;
 using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.GameScene.GameField.Level.Tiled;
@@ -30,7 +30,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
         private void LoadTileset(TilesetSettings tilesetSettings)
         {
             Tileset = new Dictionary<int, BlockSpriteAssociation>();
-            var tilesetData = JsonResourceLoader.LoadFromResources<TilesetData>(_settings.TilesetPath);
+            var tilesetData = JsonDataService.LoadFromResources<TilesetData>(_settings.TilesetPath);
             foreach (var tile in tilesetData.tiles)
             {
                 if (tilesetSettings.Tiles.TryGetValue(tile.type, out var value)) Tileset[tile.id] = value;
@@ -45,7 +45,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
                 return null;
             }
             
-            var map = JsonResourceLoader.LoadFromResources<MapData>(path);
+            var map = JsonDataService.LoadFromResources<MapData>(path);
             if (map.layers.Length < 1)
             {
                 Debug.LogError("Map has no layers!");

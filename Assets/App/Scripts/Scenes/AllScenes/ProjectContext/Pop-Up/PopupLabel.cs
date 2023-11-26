@@ -14,7 +14,11 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         public Color color
         {
             get => label.color;
-            set => label.color = value;
+            set
+            {
+                label.color = value;
+                label.enableVertexGradient = false;
+            }
         }
 
         public float fontSize
@@ -38,7 +42,8 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         public void Deactivate()
         {
             _labelController.RemoveLabel(_key, label);
-            color = Color.white;
+            label.color = Color.white;
+            label.enableVertexGradient = true;
             var rectTransform = (RectTransform)transform;
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;

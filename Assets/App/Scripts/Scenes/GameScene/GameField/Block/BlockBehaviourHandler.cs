@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.GameScene.GameField.Ball;
 using App.Scripts.Scenes.GameScene.GameField.Level;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace App.Scripts.Scenes.GameScene.GameField.Block
 {
@@ -10,6 +13,8 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         private LevelView _levelView;
         private GameFieldManager _gameFieldManager;
         private BallsController _ballsController;
+
+        private List<Sprite> _crackList;
 
         private float _minSpeed, _speedAlpha; 
         
@@ -21,6 +26,31 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
             _ballsController = ballsController;
             _minSpeed = _gameFieldManager.ballsSettings.BallSpeed.x;
             _speedAlpha = _gameFieldManager.ballsSettings.BallSpeed.y - _minSpeed;
+            _crackList = _gameFieldManager.gameFieldSettings.Cracks;
+        }
+
+        public void HandleBlockHit(BlockView blockView, int damage)
+        {
+            var block = _gameFieldManager.CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y); 
+            block?.TakeDamage(damage);
+            SwapCrack(blockView);
+        }
+
+        private void SwapCrack(BlockView blockView)
+        {
+            blockView.SetCrack(GetRandomSpriteExcluding(blockView.Crack));
+        }
+
+        private Sprite GetRandomSpriteExcluding(Sprite excludedSprite)
+        {
+            var selectedSprite = _crackList[Random.Range(0, _crackList.Count)];
+            
+            while (selectedSprite == excludedSprite)
+            {
+                selectedSprite = _crackList[Random.Range(0, _crackList.Count)];
+            }
+
+            return selectedSprite;
         }
         
         public void HandleBlockDeath(BlockView blockView, Block block)

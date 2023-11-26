@@ -33,6 +33,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
 
         public void Deactivate()
         {
+            OnHealthDepleted = null;
         }
     }
 }

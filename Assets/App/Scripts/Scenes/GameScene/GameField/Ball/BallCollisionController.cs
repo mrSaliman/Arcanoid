@@ -9,15 +9,18 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
     {
         private BallsController _ballsController;
         private GameFieldManager _gameFieldManager;
+        private BlockBehaviourHandler _blockBehaviourHandler;
 
         private float _minAngle;
 
         [GameInject]
-        public void Construct(BallsController ballsController, GameFieldManager manager)
+        public void Construct(BallsController ballsController, GameFieldManager manager,
+            BlockBehaviourHandler blockBehaviourHandler)
         {
             _ballsController = ballsController;
             _gameFieldManager = manager;
             _minAngle = _gameFieldManager.ballsSettings.MinReflectionAngle;
+            _blockBehaviourHandler = blockBehaviourHandler;
         }
         
         public void OnCollisionEnter(BallView ball, Collision2D other)
@@ -26,8 +29,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
             
             if (other.gameObject.TryGetComponent(out BlockView blockView))
             {
-                var block = _gameFieldManager.CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y); 
-                block?.TakeDamage(1);
+                _blockBehaviourHandler.HandleBlockHit(blockView, 1);
             }
             
             CalibrateSpeed(ball);

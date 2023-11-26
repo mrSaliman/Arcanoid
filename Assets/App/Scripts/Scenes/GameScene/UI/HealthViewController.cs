@@ -68,15 +68,17 @@ namespace App.Scripts.Scenes.GameScene.UI
 
             var diff = _fullHealth - hp;
 
-            for (var i = _offHealth - 1; i >= _offHealth + diff; i--)
+            for (var i = _offHealth - 1; i >= diff; i--)
             {
                 On(_healthPoints[i]);
             }
             
-            for (var i = _offHealth; i < _offHealth + diff; i++)
+            for (var i = _offHealth; i < diff; i++)
             {
                 Off(_healthPoints[i]);
             }
+
+            _offHealth = diff;
         }
 
         private void On(Image img)

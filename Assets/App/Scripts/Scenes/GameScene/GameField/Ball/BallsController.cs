@@ -22,11 +22,13 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
         private PlatformView _platformView;
         private MouseInput _mouse;
         private BallCollisionController _ballCollisionController;
+        private GameManager _gameManager;
 
         public float Speed;
 
         [GameInject]
-        public void Construct(GameFieldManager manager, PlatformView platformView, MouseInput mouseInput, BallCollisionController ballCollisionController)
+        public void Construct(GameFieldManager manager, PlatformView platformView, MouseInput mouseInput,
+            BallCollisionController ballCollisionController, GameManager gameManager)
         {
             _gameFieldManager = manager;
             _ballsSettings = _gameFieldManager.ballsSettings;
@@ -37,6 +39,41 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
             _platformView = platformView;
             _mouse = mouseInput;
             _ballCollisionController = ballCollisionController;
+            _gameManager = gameManager;
+        }
+        
+        [GamePause]
+        public void Pause()
+        {
+            foreach (var ball in _balls)
+            {
+                ball.SetSimulated(false);
+            }
+        }
+
+        [GameResume]
+        public void Resume()
+        {
+            foreach (var ball in _balls)
+            {
+                ball.SetSimulated(true);
+            }
+        }
+        
+        [GameFinish]
+        public void Finish()
+        {
+            foreach (var ball in _attachedBalls)
+            {
+                _ballViewPool.Return(ball);
+            }
+            _attachedBalls.Clear();
+
+            foreach (var ball in _balls)
+            {
+                _ballViewPool.Return(ball);
+            }
+            _balls.Clear();
         }
 
         public BallView CreateBall()
@@ -57,9 +94,9 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
         public void AttachBall(BallView ball)
         {
             _attachedBalls.Add(ball);
+            _balls.Remove(ball);
             var position = GetPlatformPosition(ball);
-            //ball.SetPosition(position);
-            ball.transform.position = position;
+            ball.SetPosition(position);
             ball.SetSimulated(true);
         }
 
@@ -76,11 +113,13 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
                 ball.SetVelocity(new Vector2(_platformView.PlatformRigidbody.velocity.x, Speed));
                 ball.SetSpeed(Speed);
             }
+            _balls.AddRange(_attachedBalls);
             _attachedBalls.Clear();
         }
 
         public void OnUpdate()
         {
+            if (_gameManager.GameState != GameState.Playing) return;
             if (_mouse.LeftButton == MouseInput.ButtonState.Up) ReleaseBalls();
             
             foreach (var ball in _attachedBalls)

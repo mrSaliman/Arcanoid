@@ -52,8 +52,22 @@ namespace App.Scripts.Scenes.GameScene.GameField
             SetupWalls();
             LoadCurrentLevel();
             _levelView.BuildLevelView(CurrentLevel);
+        }
+
+        [GameStart]
+        public void StartGame()
+        {
             _ballsController.Speed = ballsSettings.BallSpeed.x;
             CreateGluedBall();
+        }
+        
+        [GameFinish]
+        public void Finish()
+        {
+            foreach (var block in CurrentLevel.Blocks)
+            {
+                BlockPool.Return(block);
+            }
         }
 
         private void SetupWalls()

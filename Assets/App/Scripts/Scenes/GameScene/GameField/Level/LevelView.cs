@@ -42,6 +42,16 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
                 _levelLoaderSettings.BlockPoolSize);
             _blockViewPool = manager.BlockViewPool;
         }
+
+        [GameFinish]
+        public void Finish()
+        {
+            foreach (var blockView in _blocks)
+            {
+                _blockViewPool.Return(blockView);
+            }
+            _blocks.Clear();
+        }
         
         public void BuildLevelView(Level level)
         {

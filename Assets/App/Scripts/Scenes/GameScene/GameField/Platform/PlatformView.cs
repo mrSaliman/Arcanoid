@@ -32,6 +32,13 @@ namespace App.Scripts.Scenes.GameScene.GameField.Platform
         {
             transform.position = new Vector3(0, settings.BottomIndentation * _cameraRect.height + _cameraRect.yMin, 0);
         }
+        
+        [GameFinish]
+        public void Finish()
+        {
+            platformRigidbody.velocity = Vector2.zero;
+            ChangeSize(1);
+        }
 
         public void MoveToTarget(float target)
         {

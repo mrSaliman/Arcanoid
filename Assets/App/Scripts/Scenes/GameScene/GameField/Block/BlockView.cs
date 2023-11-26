@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Scripts.Libs.ObjectPool;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace App.Scripts.Scenes.GameScene.GameField.Block
 {
@@ -10,12 +11,21 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         public Action OnHealthDepletedHandler;
 
         [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private SpriteRenderer crack;
         [SerializeField] private BoxCollider2D boxCollider;
+
+        public Sprite Crack => crack.sprite;
 
         public void SetSprite(Sprite sprite)
         {
             spriteRenderer.sprite = sprite;
             boxCollider.size = sprite.bounds.size;
+        }
+
+        public void SetCrack(Sprite sprite)
+        {
+            if (!gameObject.activeSelf) return;
+            crack.sprite = sprite;
         }
 
         public void Activate()
@@ -25,6 +35,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
 
         public void Deactivate()
         {
+            crack.sprite = null;
             OnHealthDepletedHandler = null;
             gameObject.SetActive(false);
         }
