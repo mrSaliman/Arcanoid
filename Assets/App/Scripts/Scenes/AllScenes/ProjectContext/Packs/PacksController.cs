@@ -23,6 +23,8 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
         [FilePath(ParentFolder = "Assets/App/Resources", Extensions = "json", IncludeFileExtension = false)]
         public string levelToRun;
 
+        private int _startedLevel;
+
         [GameInject]
         public void Construct(SceneSwitcher sceneSwitcher)
         {
@@ -32,6 +34,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
         [GameInit]
         public void Init()
         {
+            _startedLevel = -1;
             if (JsonDataService.TryLoadData(savePath, out _packResults))
             {
                 if (packs.Packs.Count != _packResults.packs.Count)
@@ -87,8 +90,29 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
                 return;
             }
 
+            _startedLevel = packNumber;
             levelToRun = packs.Packs[packNumber].levels[_packResults.packs[packNumber].nextLevel].path;
             _sceneSwitcher.LoadSceneAsync("GameScene").Forget();
         }
+
+        public void SaveLevelResult(LevelResult result)
+        {
+            if (_startedLevel == -1) return;
+            if (result != LevelResult.Win) return;
+            var resultsPack = _packResults.packs[_startedLevel];
+            var pack = packs.Packs[_startedLevel];
+            if (resultsPack.nextLevel == resultsPack.progress && resultsPack.progress < pack.levels.Count)
+                resultsPack.progress++;
+            resultsPack.nextLevel++;
+            resultsPack.nextLevel %= resultsPack.progress + 1;
+
+            JsonDataService.SaveData(savePath, _packResults);
+        }
+    }
+
+    public enum LevelResult
+    {
+        Win,
+        Lose
     }
 }

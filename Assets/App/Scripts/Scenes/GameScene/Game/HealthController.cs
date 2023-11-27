@@ -1,7 +1,7 @@
 ﻿using System;
 using App.Scripts.Configs;
 using App.Scripts.Libs.DataManager;
-using App.Scripts.Scenes.GameScene.GameField.Ball;
+using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Game
@@ -16,13 +16,15 @@ namespace App.Scripts.Scenes.GameScene.Game
         public HealthControllerSettings Settings => settings;
 
         private DataManager _dataManager;
+        private GameManager _gameManager;
 
         public Action BallDied;
 
         [GameInject]
-        public void Construct(DataManager dataManager)
+        public void Construct(DataManager dataManager, GameManager gameManager)
         {
             _dataManager = dataManager;
+            _gameManager = gameManager;
         }
 
         [GameInit]
@@ -49,7 +51,7 @@ namespace App.Scripts.Scenes.GameScene.Game
             _dataManager.ModifyData("hp", _currentHealth);
             if (_currentHealth <= 0)
             {
-                //TODO end health behaviour
+                _gameManager.EndGame(LevelResult.Lose);
             }
             else
             {

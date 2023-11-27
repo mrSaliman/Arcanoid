@@ -1,5 +1,7 @@
 ﻿using App.Scripts.Libs.NodeArchitecture;
 using App.Scripts.Scenes.AllScenes.ProjectContext;
+using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,6 +19,9 @@ namespace App.Scripts.Scenes.GameScene.Game
         
         [SerializeField]
         private bool autoRun = true;
+
+        private PacksController _packsController;
+        private SceneSwitcher _sceneSwitcher;
          
         private void Start()
         {
@@ -36,6 +41,21 @@ namespace App.Scripts.Scenes.GameScene.Game
                 InitGame();
                 StartGame();
             }
+        }
+
+        [GameInject]
+        public void Construct(PacksController packsController, SceneSwitcher sceneSwitcher)
+        {
+            _packsController = packsController;
+            _sceneSwitcher = sceneSwitcher;
+        }
+
+        public void EndGame(LevelResult result)
+        {
+            _packsController.SaveLevelResult(result);
+            FinishGame();
+            Secede();
+            _sceneSwitcher.LoadSceneAsync("PacksScene").Forget();
         }
         
         public void Secede()
