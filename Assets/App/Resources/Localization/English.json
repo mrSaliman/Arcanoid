@@ -9,5 +9,6 @@
   "menu" : "Menu",
   "cigar" : "Cigar\nGalaxy",
   "sombrero" : "Sombrero\nGalaxy",
-  "milky-way" : "Milky Way\nGalaxy"
+  "milky-way" : "Milky Way\nGalaxy",
+  "not-discovered" : "Galaxy\nNot discovered"
 }

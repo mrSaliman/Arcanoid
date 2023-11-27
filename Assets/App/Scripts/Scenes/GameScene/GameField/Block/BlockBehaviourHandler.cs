@@ -77,7 +77,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         private void Delete(BlockView blockView)
         {
             _gameFieldManager.RemoveBlock(blockView);
-            _ballsController.Speed = _levelView.Difficulity * _speedAlpha + _minSpeed;
+            _ballsController.Speed = _levelView.Progress * _speedAlpha + _minSpeed;
         }
     }
 }

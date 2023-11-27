@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Libs.NodeArchitecture;
+using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
 using App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up;
 using UnityEngine;
 
@@ -40,12 +41,14 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext
         private readonly SceneSwitcher _sceneSwitcher = new();
         [SerializeField] private PopupManager popupManager = new();
         [SerializeField] private LocalizationManager localizationManager = new();
+        [SerializeField] private PacksController packsController = new();
 
         private void RegisterMainInstances()
         {
             RegisterInstance(_sceneSwitcher);
             RegisterInstance(localizationManager);
             RegisterInstance(popupManager);
+            RegisterInstance(packsController);
             
             localizationManager.Init();
         }

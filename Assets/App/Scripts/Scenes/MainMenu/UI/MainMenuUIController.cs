@@ -3,6 +3,7 @@ using App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up;
 using App.Scripts.Scenes.AllScenes.UI;
 using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.MainMenu.Menu;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,24 +18,24 @@ namespace App.Scripts.Scenes.MainMenu.UI
         private LabelController _labelController;
         private LocalizationManager _localizationManager;
         private SceneSwitcher _sceneSwitcher;
-        private MenuManager _menuManager;
+        private MenuSceneManager _menuSceneManager;
 
         [GameInject]
         public void Construct(PopupManager popupManager, LabelController labelController,
-            LocalizationManager localizationManager, SceneSwitcher sceneSwitcher, MenuManager menuManager)
+            LocalizationManager localizationManager, SceneSwitcher sceneSwitcher, MenuSceneManager menuSceneManager)
         {
             _popupManager = popupManager;
             _labelController = labelController;
             _localizationManager = localizationManager;
             _sceneSwitcher = sceneSwitcher;
-            _menuManager = menuManager;
+            _menuSceneManager = menuSceneManager;
         }
         
         [GameInit]
         public void Init()
         {
             languageButton.onClick.AddListener(HandleLanguageButtonClicked);
-            playButton.onClick.AddListener(HandlePlayButtonClicked);
+            playButton.onClick.AddListener(UniTask.UnityAction(HandlePlayButtonClicked));
         }
 
         private void HandleLanguageButtonClicked()
@@ -56,10 +57,10 @@ namespace App.Scripts.Scenes.MainMenu.UI
             popup.gameObject.SetActive(true);
         }
 
-        private async void HandlePlayButtonClicked()
+        private async UniTaskVoid HandlePlayButtonClicked()
         {
             _popupManager.Clean();
-            _menuManager.Secede();
+            _menuSceneManager.Secede();
             await _sceneSwitcher.LoadSceneAsync("PacksScene");
         }
     }

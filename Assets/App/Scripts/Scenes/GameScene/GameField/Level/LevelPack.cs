@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace App.Scripts.Scenes.GameScene.GameField.Level
 {
@@ -14,6 +15,6 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
         public Color buttonColor;
 
         [HideReferenceObjectPicker] [LabelText("$name")]
-        public List<LevelPath> pack;
+        public List<LevelPath> levels;
     }
 }

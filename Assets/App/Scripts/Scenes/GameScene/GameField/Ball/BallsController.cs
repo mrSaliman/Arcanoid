@@ -23,12 +23,15 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
         private MouseInput _mouse;
         private BallCollisionController _ballCollisionController;
         private GameManager _gameManager;
+        private HealthController _healthController;
 
         public float Speed;
 
+        public int Count => _attachedBalls.Count + _balls.Count;
+
         [GameInject]
         public void Construct(GameFieldManager manager, PlatformView platformView, MouseInput mouseInput,
-            BallCollisionController ballCollisionController, GameManager gameManager)
+            BallCollisionController ballCollisionController, GameManager gameManager, HealthController healthController)
         {
             _gameFieldManager = manager;
             _ballsSettings = _gameFieldManager.ballsSettings;
@@ -40,6 +43,19 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
             _mouse = mouseInput;
             _ballCollisionController = ballCollisionController;
             _gameManager = gameManager;
+            _healthController = healthController;
+        }
+
+        [GameInit]
+        public void Init()
+        {
+            _healthController.BallDied += HandleBallDied;
+        }
+
+        [GameStart]
+        public void StartGame()
+        {
+            CreateGluedBall();
         }
         
         [GamePause]
@@ -76,6 +92,11 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
             _balls.Clear();
         }
 
+        private void HandleBallDied()
+        {
+            if (Count == 0) CreateGluedBall();
+        }
+
         public BallView CreateBall()
         {
             var ball = _ballViewPool.Get();
@@ -83,6 +104,13 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
             ball.OnCollisionExitEvent += _ballCollisionController.OnCollisionExit;
             _balls.Add(ball);
             return ball;
+        }
+
+        public void CreateGluedBall()
+        {
+            var ball = CreateBall();
+            AttachBall(ball);
+            ball.Show();
         }
 
         public void DeleteBall(BallView ball)

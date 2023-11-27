@@ -3,12 +3,12 @@ using App.Scripts.Scenes.AllScenes.ProjectContext;
 using App.Scripts.Scenes.GameScene.Game;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.PacksScene.Packs
+namespace App.Scripts.Scenes.MainMenu.Menu
 {
-    public class PacksManager : MonoBehaviour
+    public class MenuSceneManager : MonoBehaviour
     {
         [SerializeField]
-        private PacksContext context;
+        private MenuContext context;
         private ContextNode _root;
         
         private void Start()

@@ -25,7 +25,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
         private float _blockWidth, _blockHeight, _expandCoefficient;
 
         private float _startBlockAmount;
-        public float Difficulity => 1 - _blocks.Count / _startBlockAmount;
+        public float Progress => 1 - _blocks.Count / _startBlockAmount;
 
         [GameInject]
         public void Construct(GameFieldManager manager, LevelLoader levelLoader, GameFieldInfoProvider gameFieldInfoProvider,

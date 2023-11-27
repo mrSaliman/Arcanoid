@@ -61,6 +61,25 @@ namespace App.Scripts.Libs.JsonDataService
                 throw;
             }
         }
+        
+        public static bool TryLoadData<T>(string relativePath, out T data)
+        {
+            var path = Application.persistentDataPath + relativePath;
 
+            data = default;
+
+            try
+            {
+                if (!File.Exists(path)) return false;
+
+                data = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to load data due to: {e.Message} {e.StackTrace}");
+                return false;
+            }
+        }
     }
 }

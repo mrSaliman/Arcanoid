@@ -58,7 +58,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: pack
+    - Name: levels
       Entry: 7
       Data: 2|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.GameField.Level.LevelPath,
         Assembly-CSharp]], mscorlib
@@ -70,7 +70,7 @@ MonoBehaviour:
       Data: 3|App.Scripts.Scenes.GameScene.GameField.Level.LevelPath, Assembly-CSharp
     - Name: path
       Entry: 1
-      Data: GameField/Levels/level1
+      Data: GameField/Levels/1
     - Name: 
       Entry: 8
       Data: 
@@ -79,7 +79,7 @@ MonoBehaviour:
       Data: 4|App.Scripts.Scenes.GameScene.GameField.Level.LevelPath, Assembly-CSharp
     - Name: path
       Entry: 1
-      Data: GameField/Levels/level2
+      Data: GameField/Levels/2
     - Name: 
       Entry: 8
       Data: 
@@ -119,7 +119,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: pack
+    - Name: levels
       Entry: 7
       Data: 6|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.GameField.Level.LevelPath,
         Assembly-CSharp]], mscorlib
@@ -131,7 +131,7 @@ MonoBehaviour:
       Data: 7|App.Scripts.Scenes.GameScene.GameField.Level.LevelPath, Assembly-CSharp
     - Name: path
       Entry: 1
-      Data: GameField/Levels/level3
+      Data: GameField/Levels/level1
     - Name: 
       Entry: 8
       Data: 
@@ -140,7 +140,7 @@ MonoBehaviour:
       Data: 8|App.Scripts.Scenes.GameScene.GameField.Level.LevelPath, Assembly-CSharp
     - Name: path
       Entry: 1
-      Data: GameField/Levels/tiles
+      Data: GameField/Levels/level2
     - Name: 
       Entry: 8
       Data: 
@@ -180,37 +180,19 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: pack
+    - Name: levels
       Entry: 7
       Data: 10|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.GameField.Level.LevelPath,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 1
     - Name: 
       Entry: 7
       Data: 11|App.Scripts.Scenes.GameScene.GameField.Level.LevelPath, Assembly-CSharp
     - Name: path
       Entry: 1
-      Data: GameField/Levels/1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 12|App.Scripts.Scenes.GameScene.GameField.Level.LevelPath, Assembly-CSharp
-    - Name: path
-      Entry: 1
-      Data: GameField/Levels/2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 13|App.Scripts.Scenes.GameScene.GameField.Level.LevelPath, Assembly-CSharp
-    - Name: path
-      Entry: 1
-      Data: GameField/Levels/3
+      Data: GameField/Levels/level3
     - Name: 
       Entry: 8
       Data: 

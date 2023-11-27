@@ -51,6 +51,10 @@ MonoBehaviour:
     elementsContainer: {fileID: 5158135266823704897}
   localizationManager:
     localizationSettings: {fileID: 11400000, guid: 6da496d37c4c3524bbda4e75390c3690, type: 2}
+  packsController:
+    savePath: Save/Progress.json
+    packs: {fileID: 11400000, guid: c11dc53c129264548a5f66bf799a880d, type: 2}
+    levelToRun: GameField/Levels/3
 --- !u!1 &7830225758407109866
 GameObject:
   m_ObjectHideFlags: 0

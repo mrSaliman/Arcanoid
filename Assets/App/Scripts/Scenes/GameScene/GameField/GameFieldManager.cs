@@ -1,6 +1,6 @@
 ﻿using App.Scripts.Configs;
-using App.Scripts.Libs.DataManager;
 using App.Scripts.Libs.ObjectPool;
+using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
 using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.GameScene.GameField.Ball;
 using App.Scripts.Scenes.GameScene.GameField.Block;
@@ -32,18 +32,20 @@ namespace App.Scripts.Scenes.GameScene.GameField
         private LevelView _levelView;
         private BallsController _ballsController;
         private HealthController _healthController;
+        private PacksController _packsController;
 
         public Level.Level CurrentLevel { get; private set; }
 
         [GameInject]
         public void Construct(LevelLoader levelLoader, GameFieldInfoProvider gameFieldInfoProvider, LevelView levelView,
-            BallsController ballsController, HealthController healthController)
+            BallsController ballsController, HealthController healthController, PacksController packsController)
         {
             _levelLoader = levelLoader;
             _gameFieldInfoProvider = gameFieldInfoProvider;
             _levelView = levelView;
             _ballsController = ballsController;
             _healthController = healthController;
+            _packsController = packsController;
         }
 
         [GameInit]
@@ -58,7 +60,6 @@ namespace App.Scripts.Scenes.GameScene.GameField
         public void StartGame()
         {
             _ballsController.Speed = ballsSettings.BallSpeed.x;
-            CreateGluedBall();
         }
         
         [GameFinish]
@@ -91,7 +92,7 @@ namespace App.Scripts.Scenes.GameScene.GameField
 
         private void LoadCurrentLevel()
         {
-            CurrentLevel = _levelLoader.LoadLevel(gameFieldSettings.DebugLevel);
+            CurrentLevel = _levelLoader.LoadLevel(_packsController.levelToRun);
         }
 
         public void RemoveBlock(BlockView blockView)
@@ -99,14 +100,6 @@ namespace App.Scripts.Scenes.GameScene.GameField
             _levelView.RemoveBlock(blockView);
             BlockPool.Return(CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y));
             CurrentLevel.RemoveBlock(blockView.gridPosition.x, blockView.gridPosition.y);
-        }
-
-        [Button]
-        private void CreateGluedBall()
-        {
-            var ball = _ballsController.CreateBall();
-            _ballsController.AttachBall(ball);
-            ball.Show();
         }
 
         [Button]
