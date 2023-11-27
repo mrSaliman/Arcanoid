@@ -35,7 +35,8 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         public void Fit()
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.viewport);
+            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)scrollRect.transform);
             SetHeight(scrollRect.content.sizeDelta.y - scrollRect.viewport.offsetMax.y +
                       scrollRect.viewport.offsetMin.y + 5);
         }

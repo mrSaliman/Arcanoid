@@ -32,12 +32,12 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         public void HandleBlockHit(BlockView blockView, int damage)
         {
             var block = _gameFieldManager.CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y); 
-            if (block != null && block.TakeDamage(damage)) SwapCrack(blockView);
+            if (block != null && block.TakeDamage(damage)) AddCrack(blockView);
         }
 
-        private void SwapCrack(BlockView blockView)
+        private void AddCrack(BlockView blockView)
         {
-            blockView.SetCrack(GetRandomSpriteExcluding(blockView.Crack));
+            blockView.AddCrack(GetRandomSpriteExcluding(blockView.LastCrack));
         }
 
         private Sprite GetRandomSpriteExcluding(Sprite excludedSprite)

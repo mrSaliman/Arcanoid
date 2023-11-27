@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.AllScenes.UI;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,9 @@ namespace App.Scripts.Scenes.PacksScene.UI
         [SerializeField] private Image glow, border, galaxy, background;
         [SerializeField] private ControlledLabel label;
         [SerializeField] private ControlledLabel lockedLabel;
+        [SerializeField] private TextMeshProUGUI packProgress;
+
+        public TextMeshProUGUI PackProgress => packProgress;
 
         [SerializeField] private Color unlockedColor;
         [SerializeField] private Color lockedColor;

@@ -67,6 +67,7 @@ namespace App.Scripts.Scenes.PacksScene.UI
                 if (!_packsController.PackResults.packs[i].discovered) packButton.Lock();
                 _labelController.AddLabel(pack.name, packButton.Label);
                 _labelController.AddLabel("not-discovered", packButton.LockedLabel);
+                packButton.PackProgress.text = $"{_packsController.PackResults.packs[i].progress}/{pack.levels.Count}";
             }
         }
     }
