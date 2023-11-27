@@ -32,8 +32,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         public void HandleBlockHit(BlockView blockView, int damage)
         {
             var block = _gameFieldManager.CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y); 
-            block?.TakeDamage(damage);
-            SwapCrack(blockView);
+            if (block != null && block.TakeDamage(damage)) SwapCrack(blockView);
         }
 
         private void SwapCrack(BlockView blockView)

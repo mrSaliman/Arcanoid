@@ -11,14 +11,14 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
 
         public event Action OnHealthDepleted;
 
-        public void TakeDamage(int damage)
+        public bool TakeDamage(int damage)
         {
-            if (health <= 0) return;
+            if (health <= 0) return false;
             health -= damage;
-            if (health <= 0)
-            {
-                OnHealthDepleted?.Invoke();
-            }
+            if (health > 0) return true;
+            OnHealthDepleted?.Invoke();
+            return false;
+
         }
 
         public void Copy(Block block)

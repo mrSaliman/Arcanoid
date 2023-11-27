@@ -55,7 +55,7 @@ MonoBehaviour:
       Data: 1
     - Name: debugLevel
       Entry: 1
-      Data: GameField/Levels/level1
+      Data: GameField/Levels/level2
     - Name: cracks
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[UnityEngine.Sprite, UnityEngine.CoreModule]],
