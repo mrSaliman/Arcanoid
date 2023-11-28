@@ -11,10 +11,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
     {
         public string name;
         [PreviewField] public Sprite galaxyPicture;
-
         public Color buttonColor;
-
-        [HideReferenceObjectPicker] [LabelText("$name")]
-        public List<LevelPath> levels;
+        public int levelCount;
     }
 }

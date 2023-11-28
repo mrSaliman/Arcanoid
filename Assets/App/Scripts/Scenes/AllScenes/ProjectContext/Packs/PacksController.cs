@@ -24,7 +24,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
         
         public LevelPacks Packs => packs;
         public PackResults PackResults => _packResults;
-        public int StartedLevel { get; private set; } = -1;
+        public int StartedPack { get; private set; } = -1;
 
         [GameInject]
         public void Construct(SceneSwitcher sceneSwitcher)
@@ -49,8 +49,8 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
                     var packResult = _packResults.packs[i];
                     var pack = packs.Packs[i];
                     if ((packResult.discovered || (packResult.progress == 0 && packResult.nextLevel == 0)) &&
-                        packResult.progress >= packResult.nextLevel && packResult.progress <= pack.levels.Count &&
-                        packResult.nextLevel < pack.levels.Count) continue;
+                        packResult.progress >= packResult.nextLevel && packResult.progress <= pack.levelCount &&
+                        packResult.nextLevel < pack.levelCount) continue;
                     Debug.LogError("Saved data is broken");
                     throw new Exception();
                 }
@@ -94,24 +94,37 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
                 return;
             }
 
-            StartedLevel = packNumber;
-            levelToRun = packs.Packs[packNumber].levels[_packResults.packs[packNumber].nextLevel].path;
+            StartedPack = packNumber;
+            levelToRun = Path.Combine(packs.LevelsFolder, $"{StartedPack + 1}_{_packResults.packs[StartedPack].nextLevel + 1}");
             _sceneSwitcher.LoadSceneAsync("GameScene").Forget();
+        }
+
+        public bool NextLevel()
+        {
+            if (StartedPack == -1) return false;
+            if (_packResults.packs[StartedPack].nextLevel == 0)
+            {
+                if (_packResults.packs.Count <= StartedPack + 1) return false;
+                StartedPack++;
+            }
+
+            levelToRun = Path.Combine(packs.LevelsFolder, $"{StartedPack + 1}_{_packResults.packs[StartedPack].nextLevel + 1}");
+            return true;
         }
 
         public void SaveLevelResult(LevelResult result)
         {
-            if (StartedLevel == -1 || result != LevelResult.Win) return;
-            var resultsPack = _packResults.packs[StartedLevel];
-            var pack = packs.Packs[StartedLevel];
-            if (resultsPack.nextLevel == resultsPack.progress && resultsPack.progress < pack.levels.Count)
+            if (StartedPack == -1 || result != LevelResult.Win) return;
+            var resultsPack = _packResults.packs[StartedPack];
+            var pack = packs.Packs[StartedPack];
+            if (resultsPack.nextLevel == resultsPack.progress && resultsPack.progress < pack.levelCount)
             {
                 resultsPack.progress++;
-                if (resultsPack.progress == pack.levels.Count && _packResults.packs.Count > StartedLevel + 1)
-                    _packResults.packs[StartedLevel + 1].discovered = true;
+                if (resultsPack.progress == pack.levelCount && _packResults.packs.Count > StartedPack + 1)
+                    _packResults.packs[StartedPack + 1].discovered = true;
             }
             resultsPack.nextLevel++;
-            resultsPack.nextLevel %= pack.levels.Count;
+            resultsPack.nextLevel %= pack.levelCount;
             JsonDataService.SaveData(savePath, _packResults);
         }
 
@@ -120,6 +133,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
         {
             var path = Path.Combine(Application.persistentDataPath , savePath);
             if (File.Exists(path)) File.Delete(path);
+            _packResults = null;
         }
     }
 

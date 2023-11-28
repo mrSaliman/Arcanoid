@@ -2001,6 +2001,7 @@ MonoBehaviour:
   gameUIController:
     scoreLabel: {fileID: 6199950089572615254}
     packProgress: {fileID: 3741992797835805122}
+    packImg: {fileID: 1778614844}
 --- !u!114 &1617583035
 MonoBehaviour:
   m_ObjectHideFlags: 0

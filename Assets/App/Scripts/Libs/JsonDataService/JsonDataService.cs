@@ -76,12 +76,8 @@ namespace App.Scripts.Libs.JsonDataService
 
             try
             {
-                if (!File.Exists(path))
-                {
-                    Debug.LogWarning($"File not found at path: {path}");
-                    return false;
-                }
-                
+                if (!File.Exists(path)) return false;
+
                 data = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
                 return true;
             }

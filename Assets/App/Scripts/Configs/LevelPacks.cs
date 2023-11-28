@@ -9,9 +9,13 @@ namespace App.Scripts.Configs
     [CreateAssetMenu(menuName = "settings/LevelPacks")]
     public class LevelPacks : SerializedScriptableObject
     {
+        [FolderPath(ParentFolder = "Assets/App/Resources")]
+        [OdinSerialize] private string levelsFolder;
+        
         [HideReferenceObjectPicker]
         [OdinSerialize] private List<LevelPack> packs;
-
+        
         public List<LevelPack> Packs => packs;
+        public string LevelsFolder => levelsFolder;
     }
 }

@@ -5,6 +5,7 @@ using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
 using App.Scripts.Scenes.GameScene.Game;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.GameScene.UI
 {
@@ -17,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.UI
         private DataManager _dataManager;
 
         [SerializeField] private TextMeshProUGUI scoreLabel, packProgress;
+        [SerializeField] private Image packImg;
 
         [GameInject]
         public void Construct(PacksController packsController, DataManager dataManager)
@@ -32,11 +34,12 @@ namespace App.Scripts.Scenes.GameScene.UI
             _dataHandlers[typeof(float)] = HandleFloatData;
             scoreLabel.text = "0%";
             
-            if (_packsController.StartedLevel == -1) return;
-            var pack = _packsController.Packs.Packs[_packsController.StartedLevel];
-            var packResult = _packsController.PackResults.packs[_packsController.StartedLevel];
+            if (_packsController.StartedPack == -1) return;
+            var pack = _packsController.Packs.Packs[_packsController.StartedPack];
+            var packResult = _packsController.PackResults.packs[_packsController.StartedPack];
 
-            packProgress.text = $"{packResult.progress} / {pack.levels.Count}";
+            packProgress.text = $"{packResult.nextLevel + 1} / {pack.levelCount}";
+            packImg.sprite = pack.galaxyPicture;
         }
         
         private void HandleDataChanged(object sender, DataChangedEventArgs e)

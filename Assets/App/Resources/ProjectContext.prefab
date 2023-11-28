@@ -54,7 +54,7 @@ MonoBehaviour:
   packsController:
     savePath: Save/Progress.json
     packs: {fileID: 11400000, guid: c11dc53c129264548a5f66bf799a880d, type: 2}
-    levelToRun: GameField/Levels/level1
+    levelToRun: GameField/Levels/1_1
 --- !u!1 &7830225758407109866
 GameObject:
   m_ObjectHideFlags: 0

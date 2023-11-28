@@ -25,6 +25,7 @@ namespace App.Scripts.Scenes.GameScene.Game
         private SceneSwitcher _sceneSwitcher;
 
         public Action OnSkipLevel;
+        public Action OnGameWin, OnGameLose;
          
         private void Start()
         {
@@ -56,9 +57,9 @@ namespace App.Scripts.Scenes.GameScene.Game
         public void EndGame(LevelResult result)
         {
             _packsController.SaveLevelResult(result);
-            FinishGame();
-            Secede();
-            _sceneSwitcher.LoadSceneAsync("PacksScene").Forget();
+            if (result == LevelResult.Win) OnGameWin?.Invoke();
+            else OnGameLose?.Invoke();
+            //_sceneSwitcher.LoadSceneAsync("PacksScene").Forget();
         }
 
         public void SkipLevel()

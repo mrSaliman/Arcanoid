@@ -3,24 +3,24 @@
  "infinite":false,
  "layers":[
         {
-         "data":[4, 9, 9, 12,
-            9, 4, 11, 9,
-            9, 12, 9, 4,
-            12, 10, 10, 10],
+         "data":[9, 9, 9,
+            9, 1, 9,
+            1, 1, 9,
+            2, 9, 9],
          "height":4,
          "id":1,
          "name":"\u0421\u043b\u043e\u0439 \u0442\u0430\u0439\u043b\u043e\u0432 1",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
-         "width":4,
+         "width":3,
          "x":0,
          "y":0
         }],
  "nextlayerid":2,
  "nextobjectid":1,
  "orientation":"orthogonal",
- "renderorder":"right-down",
+ "renderorder":"left-up",
  "tiledversion":"1.10.2",
  "tileheight":50,
  "tilesets":[
@@ -31,5 +31,5 @@
  "tilewidth":104,
  "type":"map",
  "version":"1.10",
- "width":4
+ "width":3
 }

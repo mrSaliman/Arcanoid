@@ -10,5 +10,9 @@
   "cigar" : "Cigar\nGalaxy",
   "sombrero" : "Sombrero\nGalaxy",
   "milky-way" : "Milky Way\nGalaxy",
-  "not-discovered" : "Galaxy\nNot discovered"
+  "not-discovered" : "Galaxy\nNot discovered",
+  "lose" : "You lose",
+  "win" : "you win",
+  "next" : "next",
+  "skip" : "skip level"
 }

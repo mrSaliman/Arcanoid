@@ -37,9 +37,9 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
 
         public async UniTaskVoid Fit()
         {
+            await UniTask.Yield();
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
             contentLayout.Recalculate();
-            await UniTask.Yield();
             SetHeight(scrollRect.content.sizeDelta.y - scrollRect.viewport.offsetMax.y +
                       scrollRect.viewport.offsetMin.y + 5);
         }
