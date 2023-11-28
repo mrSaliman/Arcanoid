@@ -45,6 +45,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             label.color = color;
             label.fontSize = fontSize;
             label.transform.SetParent(_contentContainer, false);
+            label.SetPreferredHeight();
             
             _popup.AddPoolableElement(label);
 
@@ -85,7 +86,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
 
         public Popup Build()
         {
-            if (Fit) _popup.Fit();
+            if (Fit) _popup.Fit().Forget();
             if (ActivateBackButton) _popup.BackButton.onClick.AddListener(() => _popupManager.Return(_popup));
             _popupManager.AddPopup(_popup);
             return _popup;

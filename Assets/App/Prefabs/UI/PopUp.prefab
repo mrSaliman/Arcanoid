@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 6087234303151218862}
+  contentLayout: {fileID: 6087234303318271436}
   mainRectTransform: {fileID: 6087234303151218863}
   backButton: {fileID: 245593877292112364}
 --- !u!1 &6087234303151218856
@@ -451,4 +452,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
-  m_VerticalFit: 1
+  m_VerticalFit: 2

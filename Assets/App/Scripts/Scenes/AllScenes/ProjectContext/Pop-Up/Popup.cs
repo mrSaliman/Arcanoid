@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using IPoolable = App.Scripts.Libs.ObjectPool.IPoolable;
@@ -9,6 +10,8 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
     {
         [SerializeField]
         private ScrollRect scrollRect;
+
+        [SerializeField] private LayoutGroup contentLayout;
 
         [SerializeField] private RectTransform mainRectTransform;
         [SerializeField] private Button backButton;
@@ -32,11 +35,11 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             set => scrollRect.vertical = value;
         }
 
-        public void Fit()
+        public async UniTaskVoid Fit()
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.viewport);
-            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)scrollRect.transform);
+            contentLayout.Recalculate();
+            await UniTask.Yield();
             SetHeight(scrollRect.content.sizeDelta.y - scrollRect.viewport.offsetMax.y +
                       scrollRect.viewport.offsetMin.y + 5);
         }
