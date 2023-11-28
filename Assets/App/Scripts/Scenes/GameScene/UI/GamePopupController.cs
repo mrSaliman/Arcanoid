@@ -60,7 +60,8 @@ namespace App.Scripts.Scenes.GameScene.UI
             builder.AddLabel(_labelController, "menu", 60, Color.white)
                 .AddButton(_labelController, "restart", 40, new Color32(157, 88, 255, 255), Restart)
                 .AddButton(_labelController, "back", 40, new Color32(251, 39, 90, 255), Back)
-                .AddButton(_labelController, "continue", 40, new Color32(83, 253, 121, 255), builder.GetBackButtonInvocation);
+                .AddButton(_labelController, "continue", 40, new Color32(83, 253, 121, 255), builder.GetBackButtonInvocation)
+                .AddButton(_labelController, "skip", 40, Color.black, _gameManager.SkipLevel);
             
             var popup = builder.Build();
             popup.transform.SetParent(canvas, false);

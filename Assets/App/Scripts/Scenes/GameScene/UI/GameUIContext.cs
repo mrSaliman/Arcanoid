@@ -10,12 +10,14 @@ namespace App.Scripts.Scenes.GameScene.UI
         [SerializeField] private LabelController labelController;
         [SerializeField] private HealthViewController healthViewController;
         [SerializeField] private GamePopupController gamePopupController;
+        [SerializeField] private GameUIController gameUIController;
 
         protected override void OnConstruct()
         {
             RegisterInstance(labelController);
             RegisterInstance(healthViewController);
             RegisterInstance(gamePopupController);
+            RegisterInstance(gameUIController);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using App.Scripts.Configs;
 using App.Scripts.Libs.JsonDataService;
 using App.Scripts.Scenes.GameScene.Game;
@@ -17,13 +18,13 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
         [SerializeField] private string savePath;
         [SerializeField] private LevelPacks packs;
         private PackResults _packResults;
-
-        public PackResults PackResults => _packResults;
-
+        
         [FilePath(ParentFolder = "Assets/App/Resources", Extensions = "json", IncludeFileExtension = false)]
         public string levelToRun;
-
-        private int _startedLevel;
+        
+        public LevelPacks Packs => packs;
+        public PackResults PackResults => _packResults;
+        public int StartedLevel { get; private set; } = -1;
 
         [GameInject]
         public void Construct(SceneSwitcher sceneSwitcher)
@@ -34,7 +35,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
         [GameInit]
         public void Init()
         {
-            _startedLevel = -1;
+            if (_packResults != null) return;   
             if (JsonDataService.TryLoadData(savePath, out _packResults))
             {
                 if (packs.Packs.Count != _packResults.packs.Count)
@@ -54,26 +55,29 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
                     throw new Exception();
                 }
             }
-            _packResults = new PackResults();
-            if (packs.Packs.Count < 1)
+            else
             {
-                Debug.LogError("Packs are empty!");
-                throw new Exception();
-            }
-
-            _packResults.packs = new List<PackProgress>();
-
-            for (var i = 0; i < packs.Packs.Count; i++)
-            {
-                _packResults.packs.Add(new PackProgress
+                _packResults = new PackResults();
+                if (packs.Packs.Count < 1)
                 {
-                    discovered = false,
-                    nextLevel = 0,
-                    progress = 0
-                });
-            }
+                    Debug.LogError("Packs are empty!");
+                    throw new Exception();
+                }
 
-            _packResults.packs[0].discovered = true;
+                _packResults.packs = new List<PackProgress>();
+
+                for (var i = 0; i < packs.Packs.Count; i++)
+                {
+                    _packResults.packs.Add(new PackProgress
+                    {
+                        discovered = false,
+                        nextLevel = 0,
+                        progress = 0
+                    });
+                }
+
+                _packResults.packs[0].discovered = true;
+            }
         }
 
         public void StartLevel(int packNumber)
@@ -90,23 +94,32 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
                 return;
             }
 
-            _startedLevel = packNumber;
+            StartedLevel = packNumber;
             levelToRun = packs.Packs[packNumber].levels[_packResults.packs[packNumber].nextLevel].path;
             _sceneSwitcher.LoadSceneAsync("GameScene").Forget();
         }
 
         public void SaveLevelResult(LevelResult result)
         {
-            if (_startedLevel == -1) return;
-            if (result != LevelResult.Win) return;
-            var resultsPack = _packResults.packs[_startedLevel];
-            var pack = packs.Packs[_startedLevel];
+            if (StartedLevel == -1 || result != LevelResult.Win) return;
+            var resultsPack = _packResults.packs[StartedLevel];
+            var pack = packs.Packs[StartedLevel];
             if (resultsPack.nextLevel == resultsPack.progress && resultsPack.progress < pack.levels.Count)
+            {
                 resultsPack.progress++;
+                if (resultsPack.progress == pack.levels.Count && _packResults.packs.Count > StartedLevel + 1)
+                    _packResults.packs[StartedLevel + 1].discovered = true;
+            }
             resultsPack.nextLevel++;
-            resultsPack.nextLevel %= resultsPack.progress + 1;
-
+            resultsPack.nextLevel %= pack.levels.Count;
             JsonDataService.SaveData(savePath, _packResults);
+        }
+
+        [Button]
+        private void ResetSaves()
+        {
+            var path = Path.Combine(Application.persistentDataPath , savePath);
+            if (File.Exists(path)) File.Delete(path);
         }
     }
 

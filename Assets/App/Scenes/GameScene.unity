@@ -1998,6 +1998,9 @@ MonoBehaviour:
     hpContainer: {fileID: 387716408}
     hpPrefab: {fileID: 1425527551254899, guid: 655ad49219332d34f80adbb4d9bb7800, type: 3}
   gamePopupController: {fileID: 1617583036}
+  gameUIController:
+    scoreLabel: {fileID: 6199950089572615254}
+    packProgress: {fileID: 3741992797835805122}
 --- !u!114 &1617583035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2372,9 +2375,8 @@ GameObject:
   - component: {fileID: 3741992797835805121}
   - component: {fileID: 3741992797835805122}
   - component: {fileID: 3741992797835805123}
-  - component: {fileID: 3741992797835805124}
   m_Layer: 5
-  m_Name: LevelNumber
+  m_Name: PackProgress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2497,20 +2499,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3741992797835805120}
   m_CullTransparentMesh: 1
---- !u!114 &3741992797835805124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3741992797835805120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc3f999cd62d4914beccf93189d8b287, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: {fileID: 3741992797835805122}
-  Localized: 0
 --- !u!1 &6199950089572615252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2524,7 +2512,7 @@ GameObject:
   - component: {fileID: 6199950089572615255}
   - component: {fileID: 6199950089572615256}
   m_Layer: 5
-  m_Name: LevelPercentage
+  m_Name: LevelProgress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

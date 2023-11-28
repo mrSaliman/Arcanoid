@@ -44,11 +44,6 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             _labelController.RemoveLabel(_key, label);
             label.color = Color.white;
             label.enableVertexGradient = true;
-            var rectTransform = (RectTransform)transform;
-            rectTransform.anchorMin = Vector2.zero;
-            rectTransform.anchorMax = Vector2.one;
-            rectTransform.offsetMin = Vector2.zero;
-            rectTransform.offsetMax = Vector2.zero;
             gameObject.SetActive(false);
         }
     }

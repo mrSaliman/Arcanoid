@@ -22,27 +22,33 @@ namespace App.Scripts.Libs.JsonDataService
         
         public static bool SaveData<T>(string relativePath, T data)
         {
-            var path = Application.persistentDataPath + relativePath;
+            var directoryPath = Path.Combine(Application.persistentDataPath,
+                Path.GetDirectoryName(relativePath) ?? string.Empty);
 
             try
             {
-                if (File.Exists(path)) File.Delete(path);
-                using var stream = File.Create(path);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                var filePath = Path.Combine(Application.persistentDataPath, relativePath);
                 
-                stream.Close();
-                File.WriteAllText(path, JsonConvert.SerializeObject(data));
+                File.WriteAllText(filePath, JsonConvert.SerializeObject(data));
+
                 return true;
             }
             catch (Exception e)
             {
-                Debug.LogError($"Unable to save data due to: {e.Message} {e.StackTrace}");
+                Debug.LogError($"Unable to save data due to: {e.Message}\n{e.StackTrace}");
                 return false;
             }
         }
+
         
         public static T LoadData<T>(string relativePath)
         {
-            var path = Application.persistentDataPath + relativePath;
+            var path = Path.Combine(Application.persistentDataPath, relativePath);
 
             if (!File.Exists(path))
             {
@@ -57,27 +63,31 @@ namespace App.Scripts.Libs.JsonDataService
             }
             catch (Exception e)
             {
-                Debug.LogError($"Failed to load data due to: {e.Message} {e.StackTrace}");
+                Debug.LogError($"Failed to load data due to: {e.Message}\n{e.StackTrace}");
                 throw;
             }
         }
-        
+
         public static bool TryLoadData<T>(string relativePath, out T data)
         {
-            var path = Application.persistentDataPath + relativePath;
+            var path = Path.Combine(Application.persistentDataPath, relativePath);
 
             data = default;
 
             try
             {
-                if (!File.Exists(path)) return false;
-
+                if (!File.Exists(path))
+                {
+                    Debug.LogWarning($"File not found at path: {path}");
+                    return false;
+                }
+                
                 data = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
                 return true;
             }
             catch (Exception e)
             {
-                Debug.LogError($"Failed to load data due to: {e.Message} {e.StackTrace}");
+                Debug.LogError($"Failed to load data due to: {e.Message}\n{e.StackTrace}");
                 return false;
             }
         }

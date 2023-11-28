@@ -1,4 +1,5 @@
-﻿using App.Scripts.Libs.NodeArchitecture;
+﻿using System;
+using App.Scripts.Libs.NodeArchitecture;
 using App.Scripts.Scenes.AllScenes.ProjectContext;
 using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
 using Cysharp.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace App.Scripts.Scenes.GameScene.Game
 
         private PacksController _packsController;
         private SceneSwitcher _sceneSwitcher;
+
+        public Action OnSkipLevel;
          
         private void Start()
         {
@@ -56,6 +59,11 @@ namespace App.Scripts.Scenes.GameScene.Game
             FinishGame();
             Secede();
             _sceneSwitcher.LoadSceneAsync("PacksScene").Forget();
+        }
+
+        public void SkipLevel()
+        {
+            OnSkipLevel?.Invoke();
         }
         
         public void Secede()

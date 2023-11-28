@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.Configs;
+using App.Scripts.Libs.DataManager;
 using App.Scripts.Libs.ObjectPool;
+using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
 using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.GameScene.GameField.Block;
 using UnityEngine;
@@ -20,17 +23,21 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
         private LevelLoader _levelLoader;
         private GameFieldManager _gameFieldManager;
         private BlockBehaviourHandler _blockBehaviourHandler;
+        private DataManager _dataManager;
+        private GameManager _gameManager;
         private Rect _cameraRect;
 
         private float _blockWidth, _blockHeight, _expandCoefficient;
 
-        private float _startBlockAmount;
-        public float Progress => 1 - _blocks.Count / _startBlockAmount;
+        private float _startBlockAmount, _currentCount;
+        public float Progress => 1 - _currentCount / _startBlockAmount;
 
         [GameInject]
         public void Construct(GameFieldManager manager, LevelLoader levelLoader, GameFieldInfoProvider gameFieldInfoProvider,
-            BlockBehaviourHandler blockBehaviourHandler)
+            BlockBehaviourHandler blockBehaviourHandler, DataManager dataManager, GameManager gameManager)
         {
+            _gameManager = gameManager;
+            _dataManager = dataManager;
             _blockBehaviourHandler = blockBehaviourHandler;
             _gameFieldManager = manager;
             _gameFieldSettings = manager.gameFieldSettings;
@@ -41,6 +48,12 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
                 () => Object.Instantiate(_gameFieldSettings.BlockViewPrefab, _gameFieldManager.blockContainer),
                 _levelLoaderSettings.BlockPoolSize);
             _blockViewPool = manager.BlockViewPool;
+        }
+
+        [GameInit]
+        public void Init()
+        {
+            _gameManager.OnSkipLevel += KillAll;
         }
 
         [GameFinish]
@@ -63,7 +76,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
                 {
                     var block = level.GetBlock(x, y);
                     if (block is null) continue;
-                    _startBlockAmount++;
+                    if (block.blockType != BlockType.Iron) _startBlockAmount++;
                     var blockView = _blockViewPool.Get();
                     blockView.SetSprite(_levelLoader.Tileset[level.GetTag(x, y)].sprite);
                     blockView.gridPosition = new Vector2Int(x, y);
@@ -75,6 +88,8 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
                     _blocks.Add(blockView);
                 }
             }
+
+            _currentCount = _startBlockAmount;
         }
 
         private void CalculateLevelSizes(Level level)
@@ -107,8 +122,25 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
 
         public void RemoveBlock(BlockView blockView)
         {
+            var block = _gameFieldManager.CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y);
+            if (block.blockType != BlockType.Iron)
+            {
+                _currentCount--;
+                _dataManager.ModifyData("score", Progress);
+                if (_currentCount == 0) _gameManager.EndGame(LevelResult.Win);
+            }
             _blocks.Remove(blockView);
             _blockViewPool.Return(blockView);
+        }
+
+        private void KillAll()
+        {
+            var temp = _blocks.Aggregate<BlockView, Action>(null,
+                (current, blockView) => current + (() =>
+                    _gameFieldManager.CurrentLevel.GetBlock(blockView.gridPosition.x, blockView.gridPosition.y)
+                        ?.TakeDamage(999)));
+
+            temp?.Invoke();
         }
     }
 }
