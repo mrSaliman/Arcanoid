@@ -92,6 +92,14 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
             _balls.Clear();
         }
 
+        public void CalibrateSpeed()
+        {
+            foreach (var ball in _balls)
+            {
+                ball.SetSpeed(Speed);
+            }
+        }
+
         private void HandleBallDied()
         {
             if (Count == 0) CreateGluedBall();

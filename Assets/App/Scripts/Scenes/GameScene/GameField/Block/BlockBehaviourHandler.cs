@@ -6,6 +6,7 @@ using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.GameScene.GameField.Ball;
 using App.Scripts.Scenes.GameScene.GameField.Boosts;
 using App.Scripts.Scenes.GameScene.GameField.Level;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -31,7 +32,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
 
         private List<Sprite> _crackList;
 
-        private float _minSpeed, _speedAlpha; 
+        private float _minSpeed, _speedAlpha, _speedModifier = 1; 
         
         [GameInject]
         public void Construct(LevelView levelView, GameFieldManager manager, BallsController ballsController,
@@ -52,14 +53,15 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         [GameInit]
         public void Init()
         {
+            _speedModifier = 1;
             _boostActions[BlockType.Death] = ActivateDeath;
             _boostActions[BlockType.Heal] = ActivateHeal;
             _boostActions[BlockType.BigPlatform] = ActivateBigPlatform;
             _boostActions[BlockType.FireBall] = ActivateFireBall;
-            _boostActions[BlockType.SlowBall] = ActivateSlowBall;
+            _boostActions[BlockType.SlowBall] = UniTask.Action(ActivateSlowBall);
             _boostActions[BlockType.SlowPlatform] = ActivateSlowPlatform;
             _boostActions[BlockType.SmallPlatform] = ActivateSmallPlatform;
-            _boostActions[BlockType.SpeedUpBall] = ActivateSpeedUpBall;
+            _boostActions[BlockType.SpeedUpBall] = UniTask.Action(ActivateSpeedUpBall);
             _boostActions[BlockType.SpeedUpPlatform] = ActivateSpeedUpPlatform;
         }
 
@@ -128,7 +130,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         private void Delete(BlockView blockView)
         {
             _gameFieldManager.RemoveBlock(blockView);
-            _ballsController.Speed = _levelView.Progress * _speedAlpha + _minSpeed;
+            _ballsController.Speed = (_levelView.Progress * _speedAlpha + _minSpeed) * _speedModifier;
         }
 
         private void ActivateBigPlatform()
@@ -136,9 +138,17 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
             Debug.Log("Touch");
         }
         
-        private void ActivateSpeedUpBall()
+        private async UniTaskVoid ActivateSpeedUpBall()
         {
-            Debug.Log("Touch");
+            var lastSpeed = _ballsController.Speed;
+            _speedModifier = settings.Boosts[BlockType.SpeedUpBall].impact;
+            _ballsController.Speed *= settings.Boosts[BlockType.SpeedUpBall].impact;
+            _ballsController.CalibrateSpeed();
+
+            await UniTask.WaitForSeconds(settings.Boosts[BlockType.SpeedUpBall].duration);
+            _ballsController.Speed = lastSpeed;
+            _speedModifier = 1;
+            _ballsController.CalibrateSpeed();
         }
         private void ActivateSpeedUpPlatform()
         {
@@ -156,9 +166,17 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         {
             Debug.Log("Touch");
         }
-        private void ActivateSlowBall()
+        private async UniTaskVoid ActivateSlowBall()
         {
-            Debug.Log("Touch");
+            var lastSpeed = _ballsController.Speed;
+            _ballsController.Speed *= settings.Boosts[BlockType.SlowBall].impact;
+            _speedModifier = settings.Boosts[BlockType.SlowBall].impact;
+            _ballsController.CalibrateSpeed();
+
+            await UniTask.WaitForSeconds(settings.Boosts[BlockType.SlowBall].duration);
+            _ballsController.Speed = lastSpeed;
+            _speedModifier = 1;
+            _ballsController.CalibrateSpeed();
         }
         private void ActivateSlowPlatform()
         {
