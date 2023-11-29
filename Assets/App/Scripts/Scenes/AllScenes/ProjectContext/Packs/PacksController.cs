@@ -129,9 +129,9 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Packs
         }
 
         [Button]
-        private void ResetSaves()
+        private void DeleteSave()
         {
-            var path = Path.Combine(Application.persistentDataPath , savePath);
+            var path = Path.Combine(Application.persistentDataPath, savePath);
             if (File.Exists(path)) File.Delete(path);
             _packResults = null;
         }

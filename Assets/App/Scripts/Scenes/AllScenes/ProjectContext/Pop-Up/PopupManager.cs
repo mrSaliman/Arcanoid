@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using App.Scripts.Configs;
 using App.Scripts.Libs.ObjectPool;
+using App.Scripts.Scenes.AllScenes.UI;
 using App.Scripts.Scenes.GameScene.Game;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -27,6 +28,21 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         public void AddPopup(Popup popup)
         {
             _popups.Add(popup);
+        }
+
+        public void CreateLowEnergyPopup(RectTransform canvas, LabelController labelController)
+        {
+            var builder = new PopupBuilder(this)
+            {
+                VerticalScroll = true,
+                Fit = true,
+                ActivateBackButton = true
+            };
+
+            builder.AddLabel(labelController, "low-energy", 45, Color.red);
+            var popup = builder.Build();
+            popup.transform.SetParent(canvas, false);
+            popup.gameObject.SetActive(true);
         }
 
         public void Clean()

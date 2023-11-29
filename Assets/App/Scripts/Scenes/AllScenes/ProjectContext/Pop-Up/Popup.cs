@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using IPoolable = App.Scripts.Libs.ObjectPool.IPoolable;
 
@@ -22,7 +23,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         private PopupManager _manager;
     
         private readonly List<IPoolable> _poolableElements = new();
-        private readonly List<GameObject> _deletableElements = new();
+        private readonly List<UnityAction> _deletableElements = new();
 
         public void Construct(PopupManager manager)
         {
@@ -56,9 +57,9 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             _poolableElements.Add(element);
         }
     
-        public void AddDeletableElement(GameObject element)
+        public void AddDeletableElement(UnityAction deleteAction)
         {
-            _deletableElements.Add(element);
+            _deletableElements.Add(deleteAction);
         }
     
         public void Activate()
@@ -69,7 +70,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         {
             foreach (var deletableElement in _deletableElements)
             {
-                Destroy(deletableElement);
+                deletableElement.Invoke();
             }
             _deletableElements.Clear();
     

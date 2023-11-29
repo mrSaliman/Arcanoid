@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Libs.NodeArchitecture;
+using App.Scripts.Scenes.AllScenes.ProjectContext.Energy;
 using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
 using App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up;
 using UnityEngine;
@@ -42,6 +43,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext
         [SerializeField] private PopupManager popupManager = new();
         [SerializeField] private LocalizationManager localizationManager = new();
         [SerializeField] private PacksController packsController = new();
+        [SerializeField] private EnergyController energyController;
 
         private void RegisterMainInstances()
         {
@@ -49,6 +51,7 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext
             RegisterInstance(localizationManager);
             RegisterInstance(popupManager);
             RegisterInstance(packsController);
+            RegisterInstance(energyController);
             
             localizationManager.Init();
         }

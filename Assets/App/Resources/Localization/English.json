@@ -14,5 +14,6 @@
   "lose" : "You lose",
   "win" : "you win",
   "next" : "next",
-  "skip" : "skip level"
+  "skip" : "skip level",
+  "low-energy" : "low energy"
 }

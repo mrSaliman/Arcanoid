@@ -74,12 +74,12 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             return this;
         }
 
-        public PopupBuilder AddUIElement(GameObject uiElement)
+        public PopupBuilder AddUIElement(GameObject uiElement, UnityAction deleteAction)
         {
             if (_contentContainer == null) return this;
             
             uiElement.transform.SetParent(_contentContainer, false);
-            _popup.AddDeletableElement(uiElement);
+            _popup.AddDeletableElement(deleteAction);
             
             return this;
         }

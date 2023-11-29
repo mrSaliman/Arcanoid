@@ -2083,6 +2083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuButton: {fileID: 84869577}
   canvas: {fileID: 639515977}
+  energyBarPrefab: {fileID: 1515141206816626797, guid: a22c11ae9b3eb544ebc106f6d84085ea, type: 3}
 --- !u!1 &1726860163
 GameObject:
   m_ObjectHideFlags: 0

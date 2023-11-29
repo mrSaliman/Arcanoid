@@ -24,7 +24,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: startLanguage
       Entry: 3
-      Data: 10
+      Data: 30
     - Name: localesFolder
       Entry: 1
       Data: Localization
