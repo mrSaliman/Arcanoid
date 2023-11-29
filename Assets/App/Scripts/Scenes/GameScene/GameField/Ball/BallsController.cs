@@ -46,12 +46,6 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
             _healthController = healthController;
         }
 
-        [GameInit]
-        public void Init()
-        {
-            _healthController.BallDied += HandleBallDied;
-        }
-
         [GameStart]
         public void StartGame()
         {
@@ -100,9 +94,13 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
             }
         }
 
-        private void HandleBallDied()
+        public void HandleBallDied()
         {
-            if (Count == 0) CreateGluedBall();
+            if (Count == 0)
+            {
+                _healthController.DealDamage(1);
+                CreateGluedBall();
+            }
         }
 
         public BallView CreateBall()

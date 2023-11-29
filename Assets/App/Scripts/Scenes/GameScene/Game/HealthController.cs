@@ -18,8 +18,6 @@ namespace App.Scripts.Scenes.GameScene.Game
         private DataManager _dataManager;
         private GameManager _gameManager;
 
-        public Action BallDied;
-
         [GameInject]
         public void Construct(DataManager dataManager, GameManager gameManager)
         {
@@ -37,26 +35,6 @@ namespace App.Scripts.Scenes.GameScene.Game
         public void Start()
         {
             _dataManager.ModifyData("hp", _currentHealth);
-        }
-
-        [GameFinish]
-        public void Finish()
-        {
-            BallDied = null;
-        }
-
-        public void DealBallDamage(int damage)
-        {
-            _currentHealth -= damage;
-            _dataManager.ModifyData("hp", _currentHealth);
-            if (_currentHealth <= 0)
-            {
-                _gameManager.EndGame(LevelResult.Lose);
-            }
-            else
-            {
-                BallDied?.Invoke();
-            }
         }
 
         public void DealDamage(int damage)

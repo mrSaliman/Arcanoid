@@ -55,7 +55,7 @@ MonoBehaviour:
   packsController:
     savePath: Saves/Progress.json
     packs: {fileID: 11400000, guid: c11dc53c129264548a5f66bf799a880d, type: 2}
-    levelToRun: GameField/Levels/2_2
+    levelToRun: GameField/Levels/3_2
   energyController: {fileID: -8880534144785380525}
 --- !u!114 &-8880534144785380525
 MonoBehaviour:

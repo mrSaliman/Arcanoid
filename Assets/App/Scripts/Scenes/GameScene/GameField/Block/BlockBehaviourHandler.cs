@@ -107,6 +107,12 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
                     _bombExplosionController.Explode(blockView, block);
                     break;
                 case BlockType.AddBall:
+                    var ball = _ballsController.CreateBall();
+                    ball.SetPosition(blockView.transform.position);
+                    ball.Show();
+                    ball.SetVelocity(Random.insideUnitCircle);
+                    ball.SetSpeed(_ballsController.Speed);
+                    ball.SetSimulated(true);
                     break;
                 case BlockType.BigPlatform:
                 case BlockType.SpeedUpBall:
