@@ -19,6 +19,8 @@ namespace App.Scripts.Scenes.GameScene.GameField.Platform
         private float _platformSize = 1;
         private float _colliderSize;
 
+        public float speedMultiplier = 1;
+
         [GameInject]
         public void Construct(GameFieldInfoProvider gameFieldInfoProvider)
         {
@@ -30,6 +32,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Platform
         [GameInit]
         public void Init()
         {
+            speedMultiplier = 1;
             transform.position = new Vector3(0, settings.BottomIndentation * _cameraRect.height + _cameraRect.yMin, 0);
         }
         
@@ -45,7 +48,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Platform
             target = Mathf.Clamp(target, _cameraRect.xMin + _colliderSize / 2, _cameraRect.xMax - _colliderSize / 2);
             var direction = new Vector2(target - platformRigidbody.position.x, settings.Smoothness).normalized;
 
-            platformRigidbody.velocity = direction * settings.PlatformSpeed;
+            platformRigidbody.velocity = direction * (settings.PlatformSpeed * speedMultiplier);
         }
 
         public void ChangeSize(float size)
