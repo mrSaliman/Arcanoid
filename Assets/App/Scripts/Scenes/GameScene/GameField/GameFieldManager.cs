@@ -113,7 +113,7 @@ namespace App.Scripts.Scenes.GameScene.GameField
             if (other.gameObject.TryGetComponent(out BallView ball))
             {
                 _ballsController.DeleteBall(ball);
-                _healthController.DealDamage(1);
+                _healthController.DealBallDamage(1);
             }
         }
     }

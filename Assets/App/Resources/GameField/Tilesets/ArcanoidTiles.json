@@ -8,7 +8,7 @@
  "margin":0,
  "name":"ArcanoidTiles",
  "spacing":0,
- "tilecount":9,
+ "tilecount":19,
  "tiledversion":"1.10.2",
  "tileheight":50,
  "tiles":[
@@ -74,6 +74,76 @@
          "imageheight":50,
          "imagewidth":104,
          "type":"ColorTNT"
+        }, 
+        {
+         "id":12,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/bluebigplatform.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"BigPlatform"
+        }, 
+        {
+         "id":13,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/bluespeedUp.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"SpeedUpBall"
+        }, 
+        {
+         "id":14,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/bluespeedupplatform.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"SpeedUpPlatform"
+        }, 
+        {
+         "id":15,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/greenheal.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"Heal"
+        }, 
+        {
+         "id":16,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/red2xball.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"AddBall"
+        }, 
+        {
+         "id":17,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/yellowdeath.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"Death"
+        }, 
+        {
+         "id":18,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/yellowfireball.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"FireBall"
+        }, 
+        {
+         "id":19,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/yellowslowBall.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"SlowBall"
+        }, 
+        {
+         "id":20,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/yellowslowplatform.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"SlowPlatform"
+        }, 
+        {
+         "id":21,
+         "image":"..\/..\/..\/Media\/Sprites\/Game\/yellowsmallplatform.png",
+         "imageheight":50,
+         "imagewidth":104,
+         "type":"SmallPlatform"
         }],
  "tilewidth":104,
  "type":"tileset",

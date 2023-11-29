@@ -14,7 +14,7 @@ namespace App.Scripts.Scenes.GameScene.GameField
         [SerializeField] private PlatformView platformView;
         private LevelLoader _levelLoader = new();
         private LevelView _levelView = new();
-        private BlockBehaviourHandler _blockBehaviourHandler = new();
+        [SerializeField] private BlockBehaviourHandler blockBehaviourHandler;
         private PlatformMover _platformMover = new();
         private BallsController _ballsController = new();
         private BallCollisionController _ballCollisionController = new();
@@ -24,7 +24,7 @@ namespace App.Scripts.Scenes.GameScene.GameField
         {
             RegisterInstance(_levelLoader);
             RegisterInstance(_levelView);
-            RegisterInstance(_blockBehaviourHandler);
+            RegisterInstance(blockBehaviourHandler);
             RegisterInstance(platformView);
             RegisterInstance(_platformMover);
             RegisterInstance(_ballsController);

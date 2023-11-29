@@ -93,6 +93,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
                 
                 var currentSprite = level.GetSprite(nextPosition.x, nextPosition.y);
                 if (currentSprite == null || chainsCount.ContainsKey(currentSprite)) continue;
+                if (level.GetBlock(nextPosition.x, nextPosition.y).blockType != BlockType.Simple) continue;
                 
                 var field = new bool[level.Width, level.Height];
                 field[startPosition.x, startPosition.y] = true;

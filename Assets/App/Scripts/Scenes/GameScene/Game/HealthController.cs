@@ -45,7 +45,7 @@ namespace App.Scripts.Scenes.GameScene.Game
             BallDied = null;
         }
 
-        public void DealDamage(int damage)
+        public void DealBallDamage(int damage)
         {
             _currentHealth -= damage;
             _dataManager.ModifyData("hp", _currentHealth);
@@ -56,6 +56,16 @@ namespace App.Scripts.Scenes.GameScene.Game
             else
             {
                 BallDied?.Invoke();
+            }
+        }
+
+        public void DealDamage(int damage)
+        {
+            _currentHealth -= damage;
+            _dataManager.ModifyData("hp", _currentHealth);
+            if (_currentHealth <= 0)
+            {
+                _gameManager.EndGame(LevelResult.Lose);
             }
         }
     }

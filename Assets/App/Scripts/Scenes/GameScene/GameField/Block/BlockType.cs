@@ -7,6 +7,16 @@
         TNT,
         VerticalTNT,
         HorizontalTNT,
-        ColorTNT
+        ColorTNT,
+        BigPlatform,
+        SpeedUpBall,
+        SpeedUpPlatform,
+        Heal,
+        AddBall,
+        Death,
+        FireBall,
+        SlowBall,
+        SlowPlatform,
+        SmallPlatform
     }
 }

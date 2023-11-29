@@ -833,6 +833,7 @@ Transform:
   - {fileID: 484483367}
   - {fileID: 789307220}
   - {fileID: 864939694}
+  - {fileID: 1981673876}
   m_Father: {fileID: 1612925184}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -871,6 +872,10 @@ MonoBehaviour:
   children: []
   gameFieldManager: {fileID: 742005424}
   platformView: {fileID: 789307223}
+  blockBehaviourHandler:
+    boostPrefab: {fileID: 2534401231792321961, guid: 584c322c2b66340459cf9d689a15570a, type: 3}
+    settings: {fileID: 11400000, guid: ee93a020957d3044ab60c437651d32e4, type: 2}
+    boostContainer: {fileID: 1981673876}
   bombExplosionController:
     settings: {fileID: 11400000, guid: 638905a3fd84cdf408d981c7691b7c86, type: 2}
     effectsFolder: {fileID: 864939694}
@@ -2119,6 +2124,7 @@ MonoBehaviour:
   menuButton: {fileID: 84869577}
   canvas: {fileID: 639515977}
   energyBarPrefab: {fileID: 1515141206816626797, guid: a22c11ae9b3eb544ebc106f6d84085ea, type: 3}
+  winGalaxyPrefab: {fileID: 690446680062544955, guid: 5aede5e8f196d354bbbdb40217424c3a, type: 3}
 --- !u!1 &1726860163
 GameObject:
   m_ObjectHideFlags: 0
@@ -2401,6 +2407,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948536992}
   m_CullTransparentMesh: 1
+--- !u!1 &1981673875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1981673876}
+  m_Layer: 0
+  m_Name: BoostContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1981673876
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981673875}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 742005423}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3741992797835805120
 GameObject:
   m_ObjectHideFlags: 0

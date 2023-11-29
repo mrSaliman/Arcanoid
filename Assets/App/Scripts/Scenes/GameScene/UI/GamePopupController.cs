@@ -6,6 +6,7 @@ using App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up;
 using App.Scripts.Scenes.AllScenes.UI;
 using App.Scripts.Scenes.GameScene.Game;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,17 +25,20 @@ namespace App.Scripts.Scenes.GameScene.UI
         private SceneSwitcher _sceneSwitcher;
         private PacksController _packsController;
         private EnergyController _energyController;
+        private LocalizationManager _localizationManager;
 
         private UnityAction _skipInvocation;
         
         [SerializeField] private EnergyBar energyBarPrefab;
+        [SerializeField] private WinGalaxy winGalaxyPrefab;
 
         private EnergyBar _currentEnergyBar;
+        private WinGalaxy _currentWinGalaxy;
 
         [GameInject]
         public void Construct(PopupManager popupManager, LabelController labelController,
             GameManager gameManager, SceneSwitcher sceneSwitcher, PacksController packsController,
-            EnergyController energyController)
+            EnergyController energyController, LocalizationManager localizationManager)
         {
             _energyController = energyController;
             _popupManager = popupManager;
@@ -42,11 +46,25 @@ namespace App.Scripts.Scenes.GameScene.UI
             _gameManager = gameManager;
             _sceneSwitcher = sceneSwitcher;
             _packsController = packsController;
+            _localizationManager = localizationManager;
         }
         
         [GameInit]
         public void Init()
         {
+            if (_currentWinGalaxy == null) _currentWinGalaxy = Instantiate(winGalaxyPrefab, canvas);
+            if (_packsController.StartedPack > -1)
+            {
+                var pack = _packsController.Packs.Packs[_packsController.StartedPack];
+                var packResult = _packsController.PackResults.packs[_packsController.StartedPack];
+
+                _currentWinGalaxy.packProgress.text = $"{packResult.nextLevel + 1} / {pack.levelCount}";
+                _currentWinGalaxy.packGalaxy.sprite = pack.galaxyPicture;
+                _currentWinGalaxy.galaxyName.text = _localizationManager.GetLocalizedString(pack.name);
+            }
+            _currentWinGalaxy.gameObject.SetActive(false);
+            
+            
             if (_currentEnergyBar == null) _currentEnergyBar = Instantiate(energyBarPrefab, canvas);
             _currentEnergyBar.maxEnergy = _energyController.Settings.MaxEnergy;
             _currentEnergyBar.gameObject.SetActive(false);
@@ -113,12 +131,42 @@ namespace App.Scripts.Scenes.GameScene.UI
             };
             builder.AddUIElement(_currentEnergyBar.gameObject, DeactivateEnergyBar)
                 .AddLabel(_labelController, "win", 60, Color.green)
+                .AddUIElement(_currentWinGalaxy.gameObject, DeactivateWinGalaxy)
                 .AddButton(_labelController, "next", 40, new Color32(157, 88, 255, 255), Next)
                 .AddButton(_labelController, "back", 40, new Color32(251, 39, 90, 255), Back);
             
             var popup = builder.Build();
             popup.transform.SetParent(canvas, false);
             popup.gameObject.SetActive(true);
+            
+            if (_packsController.StartedPack > -1)
+            {
+                var pack = _packsController.Packs.Packs[_packsController.StartedPack];
+                var packResult = _packsController.PackResults.packs[_packsController.StartedPack];
+
+                if (packResult.nextLevel == 0)
+                {
+                    if (_packsController.Packs.Packs.Count > _packsController.StartedPack + 1)
+                    {
+                        pack = _packsController.Packs.Packs[_packsController.StartedPack + 1];
+                        packResult = _packsController.PackResults.packs[_packsController.StartedPack + 1];
+                        _currentWinGalaxy.packProgress.text = $"{packResult.nextLevel + 1} / {pack.levelCount}";
+                    }
+                    else
+                    {
+                        _currentWinGalaxy.packProgress.text = $"{pack.levelCount} / {pack.levelCount}";
+                    }
+                }
+                else
+                {
+                    _currentWinGalaxy.packProgress.text = $"{packResult.nextLevel + 1} / {pack.levelCount}";
+                }
+                _currentWinGalaxy.packGalaxy.sprite = pack.galaxyPicture;
+                _currentWinGalaxy.galaxyName.text = _localizationManager.GetLocalizedString(pack.name);
+            }
+            _currentWinGalaxy.star.transform.DOLocalRotate(new Vector3(0, 0, 360), 2f, RotateMode.FastBeyond360)
+                .SetLoops(-1).SetRelative(true).SetEase(Ease.Linear);
+            _currentWinGalaxy.gameObject.SetActive(true);
             
             _currentEnergyBar.gameObject.SetActive(true);
             _energyController.AddWinEnergy();
@@ -181,6 +229,12 @@ namespace App.Scripts.Scenes.GameScene.UI
         {
             _currentEnergyBar.gameObject.SetActive(false);
             _currentEnergyBar.SetValues(new EnergyInfo {Amount = 0});
+        }
+
+        private void DeactivateWinGalaxy()
+        {
+            _currentWinGalaxy.gameObject.SetActive(false);
+            _currentWinGalaxy.star.transform.DOKill();
         }
 
         public void OnUpdate()
