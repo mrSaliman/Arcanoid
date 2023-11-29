@@ -6,6 +6,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
     {
         public readonly Block.Block[] Blocks;
         public readonly int[] Tags;
+        public readonly Sprite[] Sprites;
         
         public int Height { get; }
 
@@ -17,11 +18,19 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
             Width = width;
             Blocks = new Block.Block[height * width];
             Tags = new int[height * width];
+            Sprites = new Sprite[height * width];
         }
 
         public Block.Block GetBlock(int x, int y)
         {
             if (Fits(x, y)) return Blocks[x + y * Width];
+            Debug.LogError("Index is out of range");
+            return null;
+        }
+
+        public Sprite GetSprite(int x, int y)
+        {
+            if (Fits(x, y)) return Sprites[x + y * Width];
             Debug.LogError("Index is out of range");
             return null;
         }
@@ -52,7 +61,11 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
                 return;
             }
             Blocks[index] = block;
-            if (block is null) return;
+        }
+
+        public void SetSprite(Sprite sprite, int index)
+        {
+            Sprites[index] = sprite;
         }
 
         public void RemoveBlock(int x, int y)
@@ -64,9 +77,10 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
             }
             
             Blocks[x + y * Width] = null;
+            Sprites[x + y * Width] = null;
         }
 
-        private bool Fits(int x, int y)
+        public bool Fits(int x, int y)
         {
             return x >= 0 && x < Width && y >= 0 && y < Height;
         }

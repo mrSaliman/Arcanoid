@@ -13,14 +13,17 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
         private LevelView _levelView;
         private GameFieldManager _gameFieldManager;
         private BallsController _ballsController;
+        private BombExplosionController _bombExplosionController;
 
         private List<Sprite> _crackList;
 
         private float _minSpeed, _speedAlpha; 
         
         [GameInject]
-        public void Construct(LevelView levelView, GameFieldManager manager, BallsController ballsController)
+        public void Construct(LevelView levelView, GameFieldManager manager, BallsController ballsController,
+            BombExplosionController bombExplosionController)
         {
+            _bombExplosionController = bombExplosionController;
             _levelView = levelView;
             _gameFieldManager = manager;
             _ballsController = ballsController;
@@ -61,12 +64,10 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
                 case BlockType.Iron:
                     break;
                 case BlockType.TNT:
-                    break;
                 case BlockType.VerticalTNT:
-                    break;
                 case BlockType.HorizontalTNT:
-                    break;
                 case BlockType.ColorTNT:
+                    _bombExplosionController.Explode(blockView, block);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

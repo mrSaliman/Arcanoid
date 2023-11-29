@@ -105,12 +105,17 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
         private void SetBlockPositionAndScale(BlockView block)
         {
             var transform = block.transform;
-            transform.position = new Vector3(
-                _blockWidth / 2 + (_blockWidth + _gameFieldSettings.BetweenBlockIndentation) * block.gridPosition.x +
-                _gameFieldSettings.HorizontalIndentation + _cameraRect.xMin,
-                - _blockHeight / 2 - (_blockHeight + _gameFieldSettings.BetweenBlockIndentation) * block.gridPosition.y -
-                _gameFieldSettings.TopIndentationPercent * _cameraRect.height + _cameraRect.yMax);
+            transform.position = GetBlockPosition(block.gridPosition);
             transform.localScale = Vector3.one * _expandCoefficient;
+        }
+
+        public Vector2 GetBlockPosition(Vector2Int position)
+        {
+            return new Vector2(
+                _blockWidth / 2 + (_blockWidth + _gameFieldSettings.BetweenBlockIndentation) * position.x +
+                _gameFieldSettings.HorizontalIndentation + _cameraRect.xMin,
+                -_blockHeight / 2 - (_blockHeight + _gameFieldSettings.BetweenBlockIndentation) * position.y -
+                _gameFieldSettings.TopIndentationPercent * _cameraRect.height + _cameraRect.yMax);
         }
         
         private void HandleBlockHealthDepleted(BlockView blockView)

@@ -63,6 +63,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Level
                     boundTile = _blockPool.Get();
                     boundTile.Copy(value.block);
                     level.Tags[index] = tile;
+                    level.SetSprite(value.sprite, index);
                 }
                 level.SetBlock(boundTile, index);
             }
