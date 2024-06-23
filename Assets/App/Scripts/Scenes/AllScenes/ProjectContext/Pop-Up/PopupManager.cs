@@ -4,6 +4,8 @@ using App.Scripts.Configs;
 using App.Scripts.Libs.ObjectPool;
 using App.Scripts.Scenes.AllScenes.UI;
 using App.Scripts.Scenes.GameScene.Game;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -59,6 +61,15 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             return _poolManager.Get<T>();
         }
 
+        public async UniTask Fade()
+        {
+            foreach (var popup in _popups)
+            {
+                popup.CanvasGroup.interactable = false;
+                await popup.CanvasGroup.DOFade(0f, 1f);
+                popup.CanvasGroup.interactable = true;
+            }
+        }
         public void Return<T>(T element) where T : IPoolable
         {
             if (element is Component component) component.transform.SetParent(elementsContainer, false);

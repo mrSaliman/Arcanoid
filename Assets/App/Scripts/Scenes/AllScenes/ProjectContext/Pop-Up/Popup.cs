@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using IPoolable = App.Scripts.Libs.ObjectPool.IPoolable;
 
@@ -16,6 +18,12 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
 
         [SerializeField] private RectTransform mainRectTransform;
         [SerializeField] private Button backButton;
+
+        [SerializeField] private CanvasGroup canvasGroup;
+
+        public CanvasGroup CanvasGroup => canvasGroup;
+
+        public bool isFadable;
         
         public Button BackButton => backButton;
         public RectTransform ContentContainer => scrollRect.content;

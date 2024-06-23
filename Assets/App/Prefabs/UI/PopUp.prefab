@@ -102,7 +102,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -131,8 +131,9 @@ GameObject:
   m_Component:
   - component: {fileID: 245593879233729702}
   - component: {fileID: 245593879233729705}
+  - component: {fileID: 8546627852286221288}
   m_Layer: 5
-  m_Name: Popup
+  m_Name: PopUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,6 +177,20 @@ MonoBehaviour:
   contentLayout: {fileID: 6087234303318271436}
   mainRectTransform: {fileID: 6087234303151218863}
   backButton: {fileID: 245593877292112364}
+  canvasGroup: {fileID: 8546627852286221288}
+  isFadable: 0
+--- !u!225 &8546627852286221288
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245593879233729703}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6087234303151218856
 GameObject:
   m_ObjectHideFlags: 0
