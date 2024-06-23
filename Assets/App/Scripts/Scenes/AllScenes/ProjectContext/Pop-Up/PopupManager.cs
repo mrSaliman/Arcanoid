@@ -27,6 +27,11 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             _poolManager.AddPool(() => Object.Instantiate(settings.PopupLabelPrefab, elementsContainer));
         }
 
+        public void Remove(object value)
+        {
+            ((System.Collections.IList)_popups).Remove(value);
+        }
+
         public void AddPopup(Popup popup)
         {
             _popups.Add(popup);
@@ -38,13 +43,21 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             {
                 VerticalScroll = true,
                 Fit = true,
-                ActivateBackButton = true
+                ActivateBackButton = true,
+                IsFadable = true
             };
 
             builder.AddLabel(labelController, "low-energy", 45, Color.red);
             var popup = builder.Build();
+            popup.CanvasGroup.interactable = false;
             popup.transform.SetParent(canvas, false);
+            popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
+            var animation = popup.CanvasGroup.DOFade(1f, 1f);
+            animation.OnComplete(() =>
+            {
+                popup.CanvasGroup.interactable = true;
+            });
         }
 
         public void Clean()
@@ -52,24 +65,24 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             foreach (var popup in _popups)
             {
                 Return(popup);
+                Fade(popup);
             }
+
             _popups.Clear();
         }
-        
+
         public T Get<T>() where T : IPoolable
         {
             return _poolManager.Get<T>();
         }
 
-        public async UniTask Fade()
+        public async UniTask Fade(Popup popup)
         {
-            foreach (var popup in _popups)
-            {
-                popup.CanvasGroup.interactable = false;
-                await popup.CanvasGroup.DOFade(0f, 1f);
-                popup.CanvasGroup.interactable = true;
-            }
+            popup.CanvasGroup.interactable = false;
+            await popup.CanvasGroup.DOFade(0f, 1f);
+            popup.CanvasGroup.interactable = true;
         }
+
         public void Return<T>(T element) where T : IPoolable
         {
             if (element is Component component) component.transform.SetParent(elementsContainer, false);

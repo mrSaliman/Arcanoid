@@ -22,8 +22,6 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         [SerializeField] private CanvasGroup canvasGroup;
 
         public CanvasGroup CanvasGroup => canvasGroup;
-
-        public bool isFadable;
         
         public Button BackButton => backButton;
         public RectTransform ContentContainer => scrollRect.content;

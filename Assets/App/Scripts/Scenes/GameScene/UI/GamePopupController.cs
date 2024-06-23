@@ -80,7 +80,7 @@ namespace App.Scripts.Scenes.GameScene.UI
             _gameManager.OnGameLose -= GameLose;
             _gameManager.OnGameWin -= GameWin;
             menuButton.onClick.RemoveAllListeners();
-            await _popupManager.Fade();
+            //await _popupManager.Fade();
             _popupManager.Clean();
         }
         
@@ -91,13 +91,12 @@ namespace App.Scripts.Scenes.GameScene.UI
             {
                 VerticalScroll = false,
                 Fit = true,
-                ActivateBackButton = false
+                ActivateBackButton = true,
+                IsFadable = true
             };
 
             builder.AddBackAction(UniTask.UnityAction(async () =>
             {
-                await _popupManager.Fade();
-                _popupManager.Clean();
                 await UniTask.Yield();
                 _gameManager.ResumeGame();
             }));
@@ -111,7 +110,11 @@ namespace App.Scripts.Scenes.GameScene.UI
             
             var popup = builder.Build();
             popup.CanvasGroup.interactable = false;
-            _skipInvocation = () => _popupManager.Return(popup);
+            _skipInvocation = () =>
+            {
+                _popupManager.Return(popup);
+                _popupManager.Remove(popup);
+            };
             popup.transform.SetParent(canvas, false);
             popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
@@ -137,7 +140,8 @@ namespace App.Scripts.Scenes.GameScene.UI
             {
                 VerticalScroll = false,
                 Fit = true,
-                ActivateBackButton = false
+                ActivateBackButton = true,
+                IsFadable = true
             };
             builder.AddUIElement(_currentEnergyBar.gameObject, DeactivateEnergyBar)
                 .AddLabel(_labelController, "win", 60, Color.green)
@@ -192,7 +196,8 @@ namespace App.Scripts.Scenes.GameScene.UI
             {
                 VerticalScroll = false,
                 Fit = true,
-                ActivateBackButton = false
+                ActivateBackButton = false,
+                IsFadable = true
             };
             builder.AddUIElement(_currentEnergyBar.gameObject, DeactivateEnergyBar)
                 .AddLabel(_labelController, "lose", 60, Color.red)
