@@ -75,11 +75,12 @@ namespace App.Scripts.Scenes.GameScene.UI
         }
         
         [GameFinish]
-        public void Finish()
+        public async void Finish()
         {
             _gameManager.OnGameLose -= GameLose;
             _gameManager.OnGameWin -= GameWin;
             menuButton.onClick.RemoveAllListeners();
+            await _popupManager.Fade();
             _popupManager.Clean();
         }
         
@@ -90,11 +91,13 @@ namespace App.Scripts.Scenes.GameScene.UI
             {
                 VerticalScroll = false,
                 Fit = true,
-                ActivateBackButton = true
+                ActivateBackButton = false
             };
 
             builder.AddBackAction(UniTask.UnityAction(async () =>
             {
+                await _popupManager.Fade();
+                _popupManager.Clean();
                 await UniTask.Yield();
                 _gameManager.ResumeGame();
             }));
@@ -107,10 +110,17 @@ namespace App.Scripts.Scenes.GameScene.UI
                 .AddButton(_labelController, "skip", 40, new Color32(0, 0, 0, 120), SkipButtonClicked);
             
             var popup = builder.Build();
+            popup.CanvasGroup.interactable = false;
             _skipInvocation = () => _popupManager.Return(popup);
             popup.transform.SetParent(canvas, false);
+            popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
             
+            var animation = popup.CanvasGroup.DOFade(1f, 1f);
+            animation.OnComplete(() =>
+            {
+                popup.CanvasGroup.interactable = true;
+            });
             _currentEnergyBar.gameObject.SetActive(true);
         }
         
@@ -137,7 +147,10 @@ namespace App.Scripts.Scenes.GameScene.UI
             
             var popup = builder.Build();
             popup.transform.SetParent(canvas, false);
+            popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
+
+            popup.CanvasGroup.DOFade(1f, 1f);
             
             if (_packsController.StartedPack > -1)
             {
@@ -188,7 +201,10 @@ namespace App.Scripts.Scenes.GameScene.UI
             
             var popup = builder.Build();
             popup.transform.SetParent(canvas, false);
+            popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
+            
+            popup.CanvasGroup.DOFade(1f, 1f);
             
             _currentEnergyBar.gameObject.SetActive(true);
         }
