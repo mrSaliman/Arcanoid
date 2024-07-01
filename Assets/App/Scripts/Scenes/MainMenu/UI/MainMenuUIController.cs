@@ -4,6 +4,7 @@ using App.Scripts.Scenes.AllScenes.UI;
 using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.MainMenu.Menu;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,7 +45,8 @@ namespace App.Scripts.Scenes.MainMenu.UI
             {
                 VerticalScroll = true,
                 Fit = true,
-                ActivateBackButton = true
+                ActivateBackButton = true,
+                IsFadable = true
             };
 
             foreach (var language in _localizationManager.LocalizationSettings.AvailableLanguages)
@@ -53,8 +55,16 @@ namespace App.Scripts.Scenes.MainMenu.UI
                     () => _localizationManager.ChangeLanguage(language.Language));
             }
             var popup = builder.Build();
+            popup.CanvasGroup.interactable = false;
             popup.transform.SetParent(canvas, false);
+            popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
+            
+            var fade = popup.CanvasGroup.DOFade(1f, 0.5f);
+            fade.OnComplete(() =>
+            {
+                popup.CanvasGroup.interactable = true;
+            });
         }
 
         private async UniTaskVoid HandlePlayButtonClicked()

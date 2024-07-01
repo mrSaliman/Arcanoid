@@ -30,11 +30,9 @@ namespace App.Scripts.Libs.ObjectPool
 
         public void Return(T obj)
         {
-            if (obj != null)
-            {
-                obj.Deactivate();
-                _objects.Push(obj);
-            }
+            if (obj == null) return;
+            obj.Deactivate();
+            _objects.Push(obj);
         }
 
         private void Resize(int newSize)

@@ -21,7 +21,7 @@ namespace App.Scripts.Scenes.GameScene.UI
         private DataManager _dataManager;
         private HealthControllerSettings _settings;
         
-        private int _fullHealth, _offHealth = 0;
+        private int _fullHealth, _offHealth;
 
         [GameInject]
         public void Construct(DataManager dataManager, HealthController healthController)
@@ -41,8 +41,8 @@ namespace App.Scripts.Scenes.GameScene.UI
         {
             var dataType = e.NewData.GetType();
 
-            if (!_dataHandlers.ContainsKey(dataType)) return;
-            _dataHandlers[dataType].Invoke(e.NewData, e.TextID);
+            if (!_dataHandlers.TryGetValue(dataType, out var handler)) return;
+            handler.Invoke(e.NewData, e.TextID);
         }
         
         private void HandleIntData(object data, string textID)

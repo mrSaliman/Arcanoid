@@ -2,6 +2,7 @@
 using App.Scripts.Configs;
 using App.Scripts.Libs.NodeArchitecture;
 using App.Scripts.Libs.ObjectPool;
+using App.Scripts.Scenes.AllScenes.ProjectContext.Packs;
 using App.Scripts.Scenes.GameScene.Game;
 using App.Scripts.Scenes.GameScene.GameField.Platform;
 using UnityEngine;
@@ -96,11 +97,9 @@ namespace App.Scripts.Scenes.GameScene.GameField.Ball
 
         public void HandleBallDied()
         {
-            if (Count == 0)
-            {
-                _healthController.DealDamage(1);
-                CreateGluedBall();
-            }
+            if (Count != 0) return;
+            if (_healthController.DealDamage(1) == 0) _gameManager.EndGame(LevelResult.Lose);
+            CreateGluedBall();
         }
 
         public BallView CreateBall()

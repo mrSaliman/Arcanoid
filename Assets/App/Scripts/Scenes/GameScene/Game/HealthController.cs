@@ -37,14 +37,13 @@ namespace App.Scripts.Scenes.GameScene.Game
             _dataManager.ModifyData("hp", _currentHealth);
         }
 
-        public void DealDamage(int damage)
+        public int DealDamage(int damage)
         {
             _currentHealth -= damage;
+            if (_currentHealth > settings.StartHp) _currentHealth = settings.StartHp;
+            if (_currentHealth < 0) _currentHealth = 0;
             _dataManager.ModifyData("hp", _currentHealth);
-            if (_currentHealth <= 0)
-            {
-                _gameManager.EndGame(LevelResult.Lose);
-            }
+            return _currentHealth;
         }
     }
 }

@@ -88,10 +88,6 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         public Popup Build()
         {
             if (Fit) _popup.Fit().Forget();
-            /*if (IsFadable)
-            {
-                _popup.BackButton.onClick.AddListener(UniTask.UnityAction(async () => await _popupManager.Fade(_popup)));
-            }*/
             if (ActivateBackButton)
                 _popup.BackButton.onClick.AddListener(UniTask.UnityAction(async () =>
                 {

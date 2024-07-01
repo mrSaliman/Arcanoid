@@ -30,6 +30,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
 
         private ObjectPool<Boost> _boostPool;
         private Dictionary<BlockType, Action> _boostActions = new();
+        private List<Boost> _boosts = new();
         
 
         private List<Sprite> _crackList;
@@ -67,6 +68,33 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
             _boostActions[BlockType.SmallPlatform] = ActivateSmallPlatform;
             _boostActions[BlockType.SpeedUpBall] = UniTask.Action(ActivateSpeedUpBall);
             _boostActions[BlockType.SpeedUpPlatform] = UniTask.Action(ActivateSpeedUpPlatform);
+        }
+
+        [GamePause]
+        public void Pause()
+        {
+            foreach (var boost in _boosts)
+            {
+                boost.rb.simulated = false;
+            }
+        }
+
+        [GameResume]
+        public void Resume()
+        {
+            foreach (var boost in _boosts)
+            {
+                boost.rb.simulated = true;
+            }
+        }
+
+        [GameFinish]
+        public void Finish()
+        {
+            foreach (var boost in _boosts)
+            {
+                _boostPool.Return(boost);
+            }
         }
 
         public void HandleBlockHit(BlockView blockView, int damage)
@@ -124,9 +152,14 @@ namespace App.Scripts.Scenes.GameScene.GameField.Block
                 case BlockType.SlowPlatform:
                 case BlockType.SmallPlatform:
                     var boost = _boostPool.Get();
+                    _boosts.Add(boost);
                     boost.spriteRenderer.sprite = settings.Boosts[block.blockType].sprite;
                     boost.OnBoostApplied = _boostActions[block.blockType];
-                    boost.OnBoostApplied += () => _boostPool.Return(boost);
+                    boost.OnBoostApplied += () =>
+                    {
+                        _boosts.Remove(boost);
+                        _boostPool.Return(boost);
+                    };
                     boost.transform.position = blockView.transform.position;
                     boost.gameObject.SetActive(true);
                     boost.rb.velocity = new Vector2(0, settings.BoostSpeed);

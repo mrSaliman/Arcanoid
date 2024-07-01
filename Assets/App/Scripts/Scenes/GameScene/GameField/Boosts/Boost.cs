@@ -33,6 +33,7 @@ namespace App.Scripts.Scenes.GameScene.GameField.Boosts
         {
             OnBoostApplied = null;
             rb.velocity = Vector2.zero;
+            rb.simulated = true;
             gameObject.SetActive(false);
         }
     }

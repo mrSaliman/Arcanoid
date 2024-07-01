@@ -65,7 +65,6 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
             foreach (var popup in _popups)
             {
                 Return(popup);
-                Fade(popup);
             }
 
             _popups.Clear();
@@ -79,8 +78,16 @@ namespace App.Scripts.Scenes.AllScenes.ProjectContext.Pop_Up
         public async UniTask Fade(Popup popup)
         {
             popup.CanvasGroup.interactable = false;
-            await popup.CanvasGroup.DOFade(0f, 1f);
+            await popup.CanvasGroup.DOFade(0f, 0.5f);
             popup.CanvasGroup.interactable = true;
+        }
+        
+        public async UniTask FadeAll()
+        {
+            foreach (var popup in _popups)
+            {
+                await Fade(popup);
+            }
         }
 
         public void Return<T>(T element) where T : IPoolable

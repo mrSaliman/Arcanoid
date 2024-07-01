@@ -7,7 +7,6 @@ using App.Scripts.Scenes.AllScenes.UI;
 using App.Scripts.Scenes.GameScene.Game;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -52,7 +51,11 @@ namespace App.Scripts.Scenes.GameScene.UI
         [GameInit]
         public void Init()
         {
-            if (_currentWinGalaxy == null) _currentWinGalaxy = Instantiate(winGalaxyPrefab, canvas);
+            if (_currentWinGalaxy == null)
+            {
+                _currentWinGalaxy = Instantiate(winGalaxyPrefab, canvas);
+                _currentWinGalaxy.gameObject.SetActive(false);
+            }
             if (_packsController.StartedPack > -1)
             {
                 var pack = _packsController.Packs.Packs[_packsController.StartedPack];
@@ -62,12 +65,13 @@ namespace App.Scripts.Scenes.GameScene.UI
                 _currentWinGalaxy.packGalaxy.sprite = pack.galaxyPicture;
                 _currentWinGalaxy.galaxyName.text = _localizationManager.GetLocalizedString(pack.name);
             }
-            _currentWinGalaxy.gameObject.SetActive(false);
-            
-            
-            if (_currentEnergyBar == null) _currentEnergyBar = Instantiate(energyBarPrefab, canvas);
+
+            if (_currentEnergyBar == null)
+            {
+                _currentEnergyBar = Instantiate(energyBarPrefab, canvas);
+                _currentEnergyBar.gameObject.SetActive(false);
+            }
             _currentEnergyBar.maxEnergy = _energyController.Settings.MaxEnergy;
-            _currentEnergyBar.gameObject.SetActive(false);
             
             menuButton.onClick.AddListener(HandleMenuButtonClicked);
             _gameManager.OnGameWin += GameWin; 
@@ -75,12 +79,11 @@ namespace App.Scripts.Scenes.GameScene.UI
         }
         
         [GameFinish]
-        public async void Finish()
+        public void Finish()
         {
             _gameManager.OnGameLose -= GameLose;
             _gameManager.OnGameWin -= GameWin;
             menuButton.onClick.RemoveAllListeners();
-            //await _popupManager.Fade();
             _popupManager.Clean();
         }
         
@@ -119,8 +122,8 @@ namespace App.Scripts.Scenes.GameScene.UI
             popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
             
-            var animation = popup.CanvasGroup.DOFade(1f, 1f);
-            animation.OnComplete(() =>
+            var fade = popup.CanvasGroup.DOFade(1f, 0.5f);
+            fade.OnComplete(() =>
             {
                 popup.CanvasGroup.interactable = true;
             });
@@ -140,7 +143,7 @@ namespace App.Scripts.Scenes.GameScene.UI
             {
                 VerticalScroll = false,
                 Fit = true,
-                ActivateBackButton = true,
+                ActivateBackButton = false,
                 IsFadable = true
             };
             builder.AddUIElement(_currentEnergyBar.gameObject, DeactivateEnergyBar)
@@ -154,7 +157,7 @@ namespace App.Scripts.Scenes.GameScene.UI
             popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
 
-            popup.CanvasGroup.DOFade(1f, 1f);
+            popup.CanvasGroup.DOFade(1f, 0.5f);
             
             if (_packsController.StartedPack > -1)
             {
@@ -209,7 +212,7 @@ namespace App.Scripts.Scenes.GameScene.UI
             popup.CanvasGroup.alpha = 0f;
             popup.gameObject.SetActive(true);
             
-            popup.CanvasGroup.DOFade(1f, 1f);
+            popup.CanvasGroup.DOFade(1f, 0.5f);
             
             _currentEnergyBar.gameObject.SetActive(true);
         }
@@ -228,6 +231,8 @@ namespace App.Scripts.Scenes.GameScene.UI
                 _popupManager.CreateLowEnergyPopup(canvas, _labelController);
                 return;
             }
+
+            await _popupManager.FadeAll();
             _gameManager.FinishGame();
             _gameManager.InitGame();
             await UniTask.Yield();
